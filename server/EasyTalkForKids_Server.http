@@ -1,0 +1,6 @@
+@EasyTalkForKids_Server_HostAddress = http://localhost:5199
+
+GET {{EasyTalkForKids_Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
