@@ -17,11 +17,20 @@ namespace EasyTalkForKids.Services
             _mapper = mapper;
         }
 
-        public void Add(AddWordDto dto)
+        public void Add(WordDto dto)
         {
             var word = _mapper.Map<Word>(dto);
 
             _repository.Add(word);
+        }
+
+        public List<WordDto> Get()
+        {
+            List<Word> words = _repository.Get();
+
+            var dto = _mapper.Map<List<WordDto>>(words);
+
+            return dto;
         }
     }
 }

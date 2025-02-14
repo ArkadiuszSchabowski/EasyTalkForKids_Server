@@ -14,6 +14,13 @@ namespace EasyTalkForKids.Controllers
         {
             _wordService = wordService;
         }
+        [HttpGet]
+        public ActionResult<List<WordDto>> Get()
+        {
+            List<WordDto> words = _wordService.Get();
+
+            return words;
+        }
 
         [HttpPost]
         public ActionResult Add([FromBody] WordDto dto)

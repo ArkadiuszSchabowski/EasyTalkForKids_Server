@@ -17,5 +17,10 @@ namespace EasyTalkForKids.Repositories
             _context.Words.Add(item);
             _context.SaveChanges();
         }
+
+        public List<Word> Get()
+        {
+            return _context.Words.ToList();
+        }
     }
 }
