@@ -19,7 +19,7 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EasyTalkConnectionString"));
 });
 
-builder.Services.AddScoped<IWord, WordService>();
+builder.Services.AddScoped<IService<WordDto>, WordService>();
 
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 
