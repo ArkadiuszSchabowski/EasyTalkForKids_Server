@@ -16,7 +16,7 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add([FromBody] AddWordDto dto)
+        public ActionResult Add([FromBody] WordDto dto)
         {
             _wordService.Add(dto);
 
