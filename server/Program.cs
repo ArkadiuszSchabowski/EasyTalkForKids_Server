@@ -1,4 +1,5 @@
 using EasyTalkForKids.Interfaces;
+using EasyTalkForKids.Models;
 using EasyTalkForKids.Repositories;
 using EasyTalkForKids.Services;
 using EasyTalkForKids_Database;
@@ -23,7 +24,19 @@ builder.Services.AddScoped<IService<WordDto>, WordService>();
 
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
 var app = builder.Build();
+
+app.UseCors("CorsPolicy");
 
 if (app.Environment.IsDevelopment())
 {
