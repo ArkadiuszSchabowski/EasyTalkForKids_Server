@@ -8,9 +8,9 @@ namespace EasyTalkForKids.Controllers
     [ApiController]
     public class WordController : ControllerBase
     {
-        private readonly IWord _wordService;
+        private readonly IService<WordDto> _wordService;
 
-        public WordController(IWord wordService)
+        public WordController(IService<WordDto> wordService)
         {
             _wordService = wordService;
         }
