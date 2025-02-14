@@ -8,15 +8,22 @@ namespace EasyTalkForKids.Controllers
     [ApiController]
     public class WordController : ControllerBase
     {
-        private readonly IWord _wordService;
+        private readonly IService<WordDto> _wordService;
 
-        public WordController(IWord wordService)
+        public WordController(IService<WordDto> wordService)
         {
             _wordService = wordService;
         }
+        [HttpGet]
+        public ActionResult<List<WordDto>> Get()
+        {
+            List<WordDto> words = _wordService.Get();
+
+            return words;
+        }
 
         [HttpPost]
-        public ActionResult Add([FromBody] AddWordDto dto)
+        public ActionResult Add([FromBody] WordDto dto)
         {
             _wordService.Add(dto);
 

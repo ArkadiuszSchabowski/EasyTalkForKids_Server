@@ -2,8 +2,9 @@
 
 namespace EasyTalkForKids_Server.Interfaces
 {
-    public interface IWord
+    public interface IService<T> where T : class
     {
-        void Add(AddWordDto dto);
+        void Add(T dto);
+        List<T> Get();
     }
 }

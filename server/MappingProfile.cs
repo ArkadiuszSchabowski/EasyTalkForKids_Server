@@ -8,7 +8,8 @@ namespace EasyTalkForKids
     {
         public MappingProfile()
         {
-            CreateMap<AddWordDto, Word>();
+            CreateMap<WordDto, Word>();
+            CreateMap<Word, WordDto>();
         }
     }
 }
