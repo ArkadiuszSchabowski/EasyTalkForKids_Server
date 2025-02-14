@@ -6,7 +6,7 @@ using EasyTalkForKids_Server.Interfaces;
 
 namespace EasyTalkForKids.Services
 {
-    public class WordService : IWord
+    public class WordService : IService<WordDto>
     {
         private readonly IRepository<Word> _repository;
         private readonly IMapper _mapper;
