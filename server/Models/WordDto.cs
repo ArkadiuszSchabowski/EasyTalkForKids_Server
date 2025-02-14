@@ -1,7 +1,8 @@
 ﻿namespace EasyTalkForKids.Models
 {
-    public class AddWordDto
+    public class WordDto
     {
+        public int? Id { get; set; }
         public int LessonNumber { get; set; }
         public int LandNumber { get; set; }
         public string PolishName { get; set; } = string.Empty;
