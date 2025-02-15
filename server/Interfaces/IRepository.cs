@@ -4,5 +4,6 @@
     {
         void Add(T item);
         List<T> Get();
+        List<T> Get(int id);
     }
 }

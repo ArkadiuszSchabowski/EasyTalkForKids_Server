@@ -22,5 +22,10 @@ namespace EasyTalkForKids.Repositories
         {
             return _context.Words.ToList();
         }
+
+        public List<Word> Get(int lessonId)
+        {
+            return _context.Words.Where(w => w.LessonNumber == lessonId).ToList();
+        }
     }
 }

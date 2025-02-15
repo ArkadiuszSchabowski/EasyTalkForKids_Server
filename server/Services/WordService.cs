@@ -32,5 +32,14 @@ namespace EasyTalkForKids.Services
 
             return dto;
         }
+
+        public List<WordDto> Get(int id)
+        {
+            List<Word> words = _repository.Get(id);
+
+            var dto = _mapper.Map<List<WordDto>>(words);
+
+            return dto;
+        }
     }
 }
