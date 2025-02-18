@@ -6,26 +6,26 @@ namespace EasyTalkForKids.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class WordController : ControllerBase
+    public class LessonController : ControllerBase
     {
-        private readonly IService<WordDto> _service;
+        private readonly IService<LessonDto> _service;
 
-        public WordController(IService<WordDto> service)
+        public LessonController(IService<LessonDto> service)
         {
             _service = service;
         }
 
         [HttpGet]
-        public ActionResult<List<WordDto>> Get()
+        public ActionResult<List<LessonDto>> Get()
         {
-            List<WordDto> words = _service.Get();
+            List<LessonDto> dto = _service.Get();
 
-            return words;
+            return dto;
         }
 
 
         [HttpPost]
-        public ActionResult Add([FromBody] WordDto dto)
+        public ActionResult Add([FromBody] LessonDto dto)
         {
             _service.Add(dto);
 
@@ -33,7 +33,7 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<WordDto> Get([FromRoute] int id)
+        public ActionResult<LessonDto> Get([FromRoute] int id)
         {
             var dto = _service.Get(id);
 

@@ -1,10 +1,10 @@
-﻿using EasyTalkForKids.Models;
-
-namespace EasyTalkForKids_Server.Interfaces
+﻿namespace EasyTalkForKids_Server.Interfaces
 {
     public interface IService<T> where T : class
     {
-        void Add(T dto);
+        void Add(T item);
         List<T> Get();
+        T Get(int id);
+        void Remove(int id);
     }
 }

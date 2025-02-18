@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EasyTalkForKids_Database.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20250212192947_CreateWordsTable")]
-    partial class CreateWordsTable
+    [Migration("20250218111909_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -23,6 +23,19 @@ namespace EasyTalkForKids_Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("EasyTalkForKids_Database.Entities.Lesson", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lessons");
+                });
 
             modelBuilder.Entity("EasyTalkForKids_Database.Entities.Word", b =>
                 {
@@ -40,7 +53,14 @@ namespace EasyTalkForKids_Database.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("LandNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LessonId")
                         .HasColumnType("int");
 
                     b.Property<int>("LessonNumber")
@@ -52,7 +72,25 @@ namespace EasyTalkForKids_Database.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("LessonId");
+
                     b.ToTable("Words");
+                });
+
+            modelBuilder.Entity("EasyTalkForKids_Database.Entities.Word", b =>
+                {
+                    b.HasOne("EasyTalkForKids_Database.Entities.Lesson", "Lesson")
+                        .WithMany("Words")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("EasyTalkForKids_Database.Entities.Lesson", b =>
+                {
+                    b.Navigation("Words");
                 });
 #pragma warning restore 612, 618
         }

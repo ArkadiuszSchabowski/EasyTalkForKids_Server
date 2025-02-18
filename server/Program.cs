@@ -20,9 +20,12 @@ builder.Services.AddDbContext<MyDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("EasyTalkConnectionString"));
 });
 
+
 builder.Services.AddScoped<IService<WordDto>, WordService>();
+builder.Services.AddScoped<IService<LessonDto>, LessonService>();
 
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
+builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
 
 builder.Services.AddCors(options =>
 {
@@ -35,6 +38,8 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
+
+app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
 
