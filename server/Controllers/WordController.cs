@@ -33,7 +33,7 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get([FromRoute] int id)
+        public ActionResult<WordDto> Get([FromRoute] int id)
         {
             var dto = _service.Get(id);
 
@@ -41,9 +41,9 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public ActionResult Remove([FromRoute] int Id)
+        public ActionResult Remove([FromRoute] int id)
         {
-            _service.Remove(Id);
+            _service.Remove(id);
 
             return NoContent();
         }

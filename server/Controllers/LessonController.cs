@@ -33,17 +33,17 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult Get([FromRoute] int id)
+        public ActionResult<LessonDto> Get([FromRoute] int id)
         {
             var dto = _service.Get(id);
 
-            return Ok();
+            return Ok(dto);
         }
 
         [HttpDelete("{Id}")]
-        public ActionResult Remove([FromRoute] int Id)
+        public ActionResult Remove([FromRoute] int id)
         {
-            _service.Remove(Id);
+            _service.Remove(id);
 
             return NoContent();
         }
