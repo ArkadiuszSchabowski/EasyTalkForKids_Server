@@ -20,8 +20,6 @@ namespace EasyTalkForKids.Services
         public void Add(WordDto dto)
         {
             var word = _mapper.Map<Word>(dto);
-
-            _repository.Add(word);
         }
 
         public List<WordDto> Get()
@@ -33,13 +31,30 @@ namespace EasyTalkForKids.Services
             return dto;
         }
 
-        public List<WordDto> Get(int id)
+        public WordDto Get(int id)
         {
-            List<Word> words = _repository.Get(id);
+            Word? word = _repository.Get(id);
 
-            var dto = _mapper.Map<List<WordDto>>(words);
+            if (word == null)
+            {
+                throw new Exception("Nie znaleziono słowa o podanym Id!");
+            }
+
+            var dto = _mapper.Map<WordDto>(word);
 
             return dto;
+        }
+
+        public void Remove(int id)
+        {
+            Word? word = _repository.Get(id);
+
+            if(word == null)
+            {
+                throw new Exception("Nie znaleziono słowa o podanym Id!");
+            }
+
+            _repository.Remove(word);
         }
     }
 }

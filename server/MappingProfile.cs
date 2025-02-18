@@ -10,6 +10,8 @@ namespace EasyTalkForKids
         {
             CreateMap<WordDto, Word>();
             CreateMap<Word, WordDto>();
+            CreateMap<LessonDto, Lesson>();
+            CreateMap<Lesson, LessonDto>();
         }
     }
 }

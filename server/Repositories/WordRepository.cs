@@ -17,15 +17,19 @@ namespace EasyTalkForKids.Repositories
             _context.Words.Add(item);
             _context.SaveChanges();
         }
-
         public List<Word> Get()
         {
             return _context.Words.ToList();
         }
 
-        public List<Word> Get(int lessonId)
+        public Word? Get(int id)
         {
-            return _context.Words.Where(w => w.LessonNumber == lessonId).ToList();
+            return _context.Words.SingleOrDefault(x => x.Id == id);
+        }
+        public void Remove(Word item)
+        {
+            _context.Words.Remove(item);
+            _context.SaveChanges();
         }
     }
 }

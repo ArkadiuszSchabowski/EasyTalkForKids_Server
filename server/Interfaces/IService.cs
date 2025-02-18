@@ -2,8 +2,9 @@
 {
     public interface IService<T> where T : class
     {
-        void Add(T dto);
+        void Add(T item);
         List<T> Get();
-        List<T> Get(int id);
+        T Get(int id);
+        void Remove(int id);
     }
 }

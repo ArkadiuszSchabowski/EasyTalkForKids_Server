@@ -4,6 +4,7 @@
     {
         void Add(T item);
         List<T> Get();
-        List<T> Get(int id);
+        T? Get(int id);
+        void Remove(T item);
     }
 }
