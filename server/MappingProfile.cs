@@ -10,8 +10,8 @@ namespace EasyTalkForKids
         {
             CreateMap<WordDto, Word>();
             CreateMap<Word, WordDto>();
-            CreateMap<LessonDto, Lesson>();
-            CreateMap<Lesson, LessonDto>();
+            CreateMap<LessonDto, Lesson>().ForMember(dest => dest.Words, opt => opt.MapFrom(src => src.WordsDto));
+            CreateMap<Lesson, LessonDto>().ForMember(dest => dest.WordsDto, opt => opt.MapFrom(src => src.Words));
         }
     }
 }
