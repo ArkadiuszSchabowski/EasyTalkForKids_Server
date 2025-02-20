@@ -1,4 +1,5 @@
 using EasyTalkForKids.Interfaces;
+using EasyTalkForKids.Middleware;
 using EasyTalkForKids.Models;
 using EasyTalkForKids.Repositories;
 using EasyTalkForKids.Services;
@@ -14,6 +15,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
+
+builder.Services.AddScoped<ErrorHandlingMiddleware>();
 
 builder.Services.AddDbContext<MyDbContext>(options =>
 {
@@ -42,6 +45,8 @@ var app = builder.Build();
 app.UseStaticFiles();
 
 app.UseCors("CorsPolicy");
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {
