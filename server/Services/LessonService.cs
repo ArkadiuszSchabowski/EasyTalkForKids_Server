@@ -20,6 +20,10 @@ namespace EasyTalkForKids.Services
         public void Add(LessonDto dto)
         {
             var lesson = _mapper.Map<Lesson>(dto);
+
+            lesson.Id = 0;
+
+            _repository.Add(lesson);
         }
 
         public List<LessonDto> Get()
