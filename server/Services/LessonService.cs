@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids_Database.Entities;
@@ -41,7 +42,7 @@ namespace EasyTalkForKids.Services
 
             if (lesson == null)
             {
-                throw new Exception("Nie znaleziono lekcji o podanym Id!");
+                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
             }
 
             var dto = _mapper.Map<LessonDto>(lesson);
@@ -55,7 +56,7 @@ namespace EasyTalkForKids.Services
 
             if (lesson == null)
             {
-                throw new Exception("Nie znaleziono lekcji o podanym Id!");
+                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
             }
 
             _repository.Remove(lesson);

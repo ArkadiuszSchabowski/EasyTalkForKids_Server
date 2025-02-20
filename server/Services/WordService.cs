@@ -37,7 +37,7 @@ namespace EasyTalkForKids.Services
 
             if (word == null)
             {
-                throw new Exception("Nie znaleziono słowa o podanym Id!");
+                throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
             }
 
             var dto = _mapper.Map<WordDto>(word);
@@ -51,7 +51,7 @@ namespace EasyTalkForKids.Services
 
             if(word == null)
             {
-                throw new Exception("Nie znaleziono słowa o podanym Id!");
+                throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
             }
 
             _repository.Remove(word);
