@@ -40,7 +40,7 @@ namespace EasyTalkForKids.Controllers
             return Ok(dto);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public ActionResult Remove([FromRoute] int id)
         {
             _service.Remove(id);
