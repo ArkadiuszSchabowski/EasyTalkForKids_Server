@@ -24,6 +24,11 @@ namespace EasyTalkForKids_Database
                 .HasMany(l => l.Words)
                 .WithOne(w => w.Lesson)
                 .HasForeignKey(w => w.LessonId);
+
+            modelBuilder.Entity<Category>()
+                .HasMany(c => c.Lessons)
+                .WithOne(l => l.Category)
+                .HasForeignKey(l => l.CategoryId);
         }
     }
 }
