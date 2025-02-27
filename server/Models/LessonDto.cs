@@ -1,12 +1,10 @@
-﻿using EasyTalkForKids_Database.Entities;
-
-namespace EasyTalkForKids.Models
+﻿namespace EasyTalkForKids.Models
 {
     public class LessonDto
     {
         public int? Id { get; set; }
         public int TopicId { get; set; }
         public int CategoryId { get; set; }
-        public List<Word> Words { get; set; } = new List<Word>();
+        public List<WordDto> WordsDto { get; set; } = new List<WordDto>();
     }
 }
