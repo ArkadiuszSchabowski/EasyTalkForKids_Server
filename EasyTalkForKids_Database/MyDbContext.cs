@@ -15,10 +15,10 @@ namespace EasyTalkForKids_Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Topic>()
-                .HasOne(t => t.Lesson)
-                .WithOne(l => l.Topic)
-                .HasForeignKey<Topic>(t => t.LessonId);
+            modelBuilder.Entity<Lesson>()
+                .HasOne(l => l.Topic)
+                .WithOne(t => t.Lesson)
+                .HasForeignKey<Lesson>(l => l.TopicId);
 
             modelBuilder.Entity<Lesson>()
                 .HasMany(l => l.Words)
