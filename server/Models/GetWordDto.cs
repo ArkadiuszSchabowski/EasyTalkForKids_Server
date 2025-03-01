@@ -1,10 +1,8 @@
-﻿using EasyTalkForKids_Database.Entities;
-
-namespace EasyTalkForKids.Models
+﻿namespace EasyTalkForKids.Models
 {
-    public class WordDto
+    public class GetWordDto
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int LessonNumber { get; set; }
         public int LandNumber { get; set; }
         public string PolishName { get; set; } = string.Empty;

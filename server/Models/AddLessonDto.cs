@@ -1,10 +1,9 @@
 ﻿namespace EasyTalkForKids.Models
 {
-    public class LessonDto
+    public class AddLessonDto
     {
-        public int? Id { get; set; }
         public int TopicId { get; set; }
         public int CategoryId { get; set; }
-        public List<WordDto> WordsDto { get; set; } = new List<WordDto>();
+        public List<AddWordDto> WordsDto { get; set; } = new List<AddWordDto>();
     }
 }

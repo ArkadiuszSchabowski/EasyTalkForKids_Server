@@ -1,5 +1,5 @@
-﻿using EasyTalkForKids.Models;
-using EasyTalkForKids_Server.Interfaces;
+﻿using EasyTalkForKids.Interfaces;
+using EasyTalkForKids.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyTalkForKids.Controllers
@@ -8,34 +8,38 @@ namespace EasyTalkForKids.Controllers
     [ApiController]
     public class LessonController : ControllerBase
     {
-        private readonly IService<LessonDto> _service;
+        private readonly IAddService<AddLessonDto> _addService;
+        private readonly IGetService<GetLessonDto> _getService;
+        private readonly IRemoveService<RemoveLessonDto> _removeService;
 
-        public LessonController(IService<LessonDto> service)
+        public LessonController(IAddService<AddLessonDto> addService, IGetService<GetLessonDto> getService, IRemoveService<RemoveLessonDto> removeService)
         {
-            _service = service;
+            _addService = addService;
+            _getService = getService;
+            _removeService = removeService;
         }
 
         [HttpGet]
-        public ActionResult<List<LessonDto>> Get()
+        public ActionResult<List<GetLessonDto>> Get()
         {
-            List<LessonDto> dto = _service.Get();
+            List<GetLessonDto> dto = _getService.Get();
 
             return dto;
         }
 
 
         [HttpPost]
-        public ActionResult Add([FromBody] LessonDto dto)
+        public ActionResult Add([FromBody] AddLessonDto dto)
         {
-            _service.Add(dto);
+            _addService.Add(dto);
 
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<LessonDto> Get([FromRoute] int id)
+        public ActionResult<AddLessonDto> Get([FromRoute] int id)
         {
-            var dto = _service.Get(id);
+            var dto = _getService.Get(id);
 
             return Ok(dto);
         }
@@ -43,7 +47,7 @@ namespace EasyTalkForKids.Controllers
         [HttpDelete("{id}")]
         public ActionResult Remove([FromRoute] int id)
         {
-            _service.Remove(id);
+            _removeService.Remove(id);
 
             return NoContent();
         }

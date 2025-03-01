@@ -5,7 +5,6 @@ using EasyTalkForKids.Repositories;
 using EasyTalkForKids.Services;
 using EasyTalkForKids_Database;
 using EasyTalkForKids_Database.Entities;
-using EasyTalkForKids_Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,8 +23,13 @@ builder.Services.AddDbContext<MyDbContext>(options =>
 });
 
 
-builder.Services.AddScoped<IService<WordDto>, WordService>();
-builder.Services.AddScoped<IService<LessonDto>, LessonService>();
+builder.Services.AddScoped<IAddService<AddLessonDto>, LessonService>();
+builder.Services.AddScoped<IGetService<GetLessonDto>, LessonService>();
+builder.Services.AddScoped<IRemoveService<RemoveLessonDto>, LessonService>();
+
+builder.Services.AddScoped<IAddService<AddWordDto>, WordService>();
+builder.Services.AddScoped<IGetService<GetWordDto>, WordService>();
+builder.Services.AddScoped<IRemoveService<RemoveWordDto>, WordService>();
 
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
