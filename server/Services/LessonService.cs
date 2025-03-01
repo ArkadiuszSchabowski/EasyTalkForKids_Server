@@ -3,11 +3,10 @@ using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids_Database.Entities;
-using EasyTalkForKids_Server.Interfaces;
 
 namespace EasyTalkForKids.Services
 {
-    public class LessonService : IService<LessonDto>
+    public class LessonService : IAddService<AddLessonDto>, IGetService<GetLessonDto>, IRemoveService<RemoveLessonDto>
     {
         private readonly IRepository<Lesson> _repository;
         private readonly IMapper _mapper;
@@ -18,7 +17,7 @@ namespace EasyTalkForKids.Services
             _mapper = mapper;
         }
 
-        public void Add(LessonDto dto)
+        public void Add(AddLessonDto dto)
         {
             var lesson = _mapper.Map<Lesson>(dto);
 
@@ -27,16 +26,16 @@ namespace EasyTalkForKids.Services
             _repository.Add(lesson);
         }
 
-        public List<LessonDto> Get()
+        public List<GetLessonDto> Get()
         {
             List<Lesson> lessons = _repository.Get();
 
-            var dto = _mapper.Map<List<LessonDto>>(lessons);
+            var dto = _mapper.Map<List<GetLessonDto>>(lessons);
 
             return dto;
         }
 
-        public LessonDto Get(int id)
+        public GetLessonDto Get(int id)
         {
             Lesson? lesson = _repository.Get(id);
 
@@ -45,7 +44,7 @@ namespace EasyTalkForKids.Services
                 throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
             }
 
-            var dto = _mapper.Map<LessonDto>(lesson);
+            var dto = _mapper.Map<GetLessonDto>(lesson);
 
             return dto;
         }

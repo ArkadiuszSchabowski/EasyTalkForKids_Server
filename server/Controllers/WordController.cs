@@ -1,5 +1,5 @@
-﻿using EasyTalkForKids.Models;
-using EasyTalkForKids_Server.Interfaces;
+﻿using EasyTalkForKids.Interfaces;
+using EasyTalkForKids.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace EasyTalkForKids.Controllers
@@ -8,34 +8,38 @@ namespace EasyTalkForKids.Controllers
     [ApiController]
     public class WordController : ControllerBase
     {
-        private readonly IService<WordDto> _service;
+        private readonly IAddService<AddWordDto> _addService;
+        private readonly IGetService<GetWordDto> _getService;
+        private readonly IRemoveService<RemoveWordDto> _removeService;
 
-        public WordController(IService<WordDto> service)
+        public WordController(IAddService<AddWordDto> addService, IGetService<GetWordDto> getService, IRemoveService<RemoveWordDto> removeService)
         {
-            _service = service;
+            _addService = addService;
+            _getService = getService;
+            _removeService = removeService;
         }
 
         [HttpGet]
-        public ActionResult<List<WordDto>> Get()
+        public ActionResult<List<GetWordDto>> Get()
         {
-            List<WordDto> words = _service.Get();
+            List<GetWordDto> words = _getService.Get();
 
             return words;
         }
 
 
         [HttpPost]
-        public ActionResult Add([FromBody] WordDto dto)
+        public ActionResult Add([FromBody] AddWordDto dto)
         {
-            _service.Add(dto);
+            _addService.Add(dto);
 
             return Ok();
         }
 
         [HttpGet("{id}")]
-        public ActionResult<WordDto> Get([FromRoute] int id)
+        public ActionResult<GetWordDto> Get([FromRoute] int id)
         {
-            var dto = _service.Get(id);
+            var dto = _getService.Get(id);
 
             return Ok(dto);
         }
@@ -43,7 +47,7 @@ namespace EasyTalkForKids.Controllers
         [HttpDelete("{id}")]
         public ActionResult Remove([FromRoute] int id)
         {
-            _service.Remove(id);
+            _removeService.Remove(id);
 
             return NoContent();
         }

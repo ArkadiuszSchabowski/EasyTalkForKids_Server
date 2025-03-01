@@ -3,11 +3,11 @@ using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids_Database.Entities;
-using EasyTalkForKids_Server.Interfaces;
 
 namespace EasyTalkForKids.Services
 {
-    public class WordService : IService<WordDto>
+    public class WordService : IAddService<AddWordDto>, IGetService<GetWordDto>,
+        IRemoveService<RemoveWordDto>
     {
         private readonly IRepository<Word> _repository;
         private readonly IRepository<Lesson> _lessonRepository;
@@ -20,7 +20,7 @@ namespace EasyTalkForKids.Services
             _mapper = mapper;
         }
 
-        public void Add(WordDto dto)
+        public void Add(AddWordDto dto)
         {
             var lesson = _lessonRepository.Get(dto.LessonId);
 
@@ -34,16 +34,16 @@ namespace EasyTalkForKids.Services
             _repository.Add(word);
         }
 
-        public List<WordDto> Get()
+        public List<GetWordDto> Get()
         {
             List<Word> words = _repository.Get();
 
-            var dto = _mapper.Map<List<WordDto>>(words);
+            var dto = _mapper.Map<List<GetWordDto>>(words);
 
             return dto;
         }
 
-        public WordDto Get(int id)
+        public GetWordDto Get(int id)
         {
             Word? word = _repository.Get(id);
 
@@ -52,7 +52,7 @@ namespace EasyTalkForKids.Services
                 throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
             }
 
-            var dto = _mapper.Map<WordDto>(word);
+            var dto = _mapper.Map<GetWordDto>(word);
 
             return dto;
         }
