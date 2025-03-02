@@ -37,7 +37,7 @@ namespace EasyTalkForKids.Controllers
         }
 
         [HttpGet("{id}")]
-        public ActionResult<AddLessonDto> Get([FromRoute] int id)
+        public ActionResult<GetLessonDto> Get([FromRoute] int id)
         {
             var dto = _getService.Get(id);
 

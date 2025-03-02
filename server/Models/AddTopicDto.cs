@@ -1,6 +1,4 @@
-﻿using EasyTalkForKids_Database.Entities;
-
-namespace EasyTalkForKids.Models
+﻿namespace EasyTalkForKids.Models
 {
     public class AddTopicDto
     {
