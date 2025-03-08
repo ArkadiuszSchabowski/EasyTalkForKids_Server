@@ -8,6 +8,7 @@ namespace EasyTalkForKids_Database
         public DbSet<Word> Words { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
 

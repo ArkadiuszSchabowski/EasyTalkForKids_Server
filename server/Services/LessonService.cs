@@ -21,8 +21,6 @@ namespace EasyTalkForKids.Services
         {
             var lesson = _mapper.Map<Lesson>(dto);
 
-            lesson.Id = 0;
-
             _repository.Add(lesson);
         }
 
