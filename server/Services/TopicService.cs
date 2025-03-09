@@ -40,7 +40,7 @@ namespace EasyTalkForKids.Services
 
             if (topic == null)
             {
-                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
+                throw new NotFoundException("Nie znaleziono tematu o takim numerze Id!");
             }
 
             var dto = _mapper.Map<GetTopicDto>(topic);
@@ -54,7 +54,7 @@ namespace EasyTalkForKids.Services
 
             if (topic == null)
             {
-                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
+                throw new NotFoundException("Nie znaleziono tematu o takim numerze Id!");
             }
 
             _repository.Remove(topic);
