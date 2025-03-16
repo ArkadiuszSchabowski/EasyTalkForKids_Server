@@ -9,7 +9,7 @@ namespace EasyTalkForKids
         public MappingProfile()
         {
 
-            CreateMap<AddLessonDto, Lesson>().ForMember(dest => dest.Words, opt => opt.MapFrom(src => src.WordsDto));
+            CreateMap<AddLessonDto, Lesson>();
             CreateMap<Lesson, GetLessonDto>().ForMember(dest => dest.WordsDto, opt => opt.MapFrom(src => src.Words));
             
             CreateMap<AddWordDto, Word>();
