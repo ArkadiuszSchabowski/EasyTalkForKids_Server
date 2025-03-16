@@ -2,7 +2,7 @@
 {
     public class AddCategoryDto
     {
-        public string Name { get; set; } = string.Empty;
-        public List<AddLessonDto> Lessons { get; set; } = new List<AddLessonDto>();
+        public string PolishName { get; set; } = string.Empty;
+        public string EnglishName { get; set; } = string.Empty;
     }
 }
