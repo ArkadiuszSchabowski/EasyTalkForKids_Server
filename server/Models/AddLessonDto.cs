@@ -2,7 +2,8 @@
 {
     public class AddLessonDto
     {
-        public int TopicId { get; set; }
+        public string PolishName { get; set; } = string.Empty;
+        public string EnglishName { get; set; } = string.Empty;
         public int CategoryId { get; set; }
     }
 }

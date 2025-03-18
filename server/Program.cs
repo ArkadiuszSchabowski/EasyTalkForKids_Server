@@ -31,10 +31,6 @@ builder.Services.AddScoped<IAddService<AddLessonDto>, LessonService>();
 builder.Services.AddScoped<IGetService<GetLessonDto>, LessonService>();
 builder.Services.AddScoped<IRemoveService<RemoveLessonDto>, LessonService>();
 
-builder.Services.AddScoped<IAddService<AddTopicDto>, TopicService>();
-builder.Services.AddScoped<IGetService<GetTopicDto>, TopicService>();
-builder.Services.AddScoped<IRemoveService<RemoveTopicDto>, TopicService>();
-
 builder.Services.AddScoped<IAddService<AddWordDto>, WordService>();
 builder.Services.AddScoped<IGetService<GetWordDto>, WordService>();
 builder.Services.AddScoped<IRemoveService<RemoveWordDto>, WordService>();
@@ -42,7 +38,6 @@ builder.Services.AddScoped<IRemoveService<RemoveWordDto>, WordService>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
-builder.Services.AddScoped<IRepository<Topic>, TopicRepository>();
 
 builder.Services.AddCors(options =>
 {

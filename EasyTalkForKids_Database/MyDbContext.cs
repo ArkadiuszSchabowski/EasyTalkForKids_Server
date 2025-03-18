@@ -7,7 +7,6 @@ namespace EasyTalkForKids_Database
     {
         public DbSet<Word> Words { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<Topic> Topics { get; set; }
         public DbSet<Category> Categories { get; set; }
         public MyDbContext(DbContextOptions<MyDbContext> options) : base(options)
         {
@@ -16,10 +15,6 @@ namespace EasyTalkForKids_Database
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Lesson>()
-                .HasOne(l => l.Topic)
-                .WithOne(t => t.Lesson)
-                .HasForeignKey<Lesson>(l => l.TopicId);
 
             modelBuilder.Entity<Lesson>()
                 .HasMany(l => l.Words)
