@@ -26,7 +26,7 @@ namespace EasyTalkForKids.Services
 
             if(lesson == null)
             {
-                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id");
+                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
             }
 
             var word = _mapper.Map<Word>(dto);

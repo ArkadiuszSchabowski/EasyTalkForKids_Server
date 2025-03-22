@@ -2,6 +2,7 @@
 using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
+using EasyTalkForKids.Repositories;
 using EasyTalkForKids_Database.Entities;
 
 namespace EasyTalkForKids.Services
@@ -9,16 +10,25 @@ namespace EasyTalkForKids.Services
     public class LessonService : IAddService<AddLessonDto>, IGetService<GetLessonDto>, IRemoveService<RemoveLessonDto>
     {
         private readonly IRepository<Lesson> _repository;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
 
-        public LessonService(IRepository<Lesson> repository, IMapper mapper)
+        public LessonService(IRepository<Lesson> repository, IRepository<Category> categoryRepository, IMapper mapper)
         {
             _repository = repository;
+            _categoryRepository = categoryRepository;
             _mapper = mapper;
         }
 
         public void Add(AddLessonDto dto)
         {
+            var category = _categoryRepository.Get(dto.CategoryId);
+
+            if (category == null)
+            {
+                throw new NotFoundException("Nie znaleziono kategorii o takim numerze Id!");
+            }
+
             var lesson = _mapper.Map<Lesson>(dto);
 
             _repository.Add(lesson);
