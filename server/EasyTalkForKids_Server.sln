@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalkForKids", "EasyTalk
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalkForKids_Database", "..\EasyTalkForKids_Database\EasyTalkForKids_Database.csproj", "{67391431-91F0-49B5-96A0-DCC2240AF28F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyTalkForKids_UnitTests", "..\EasyTalkForKids_UnitTests\EasyTalkForKids_UnitTests.csproj", "{B725308D-2B42-4422-994F-05A058194874}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +23,15 @@ Global
 		{67391431-91F0-49B5-96A0-DCC2240AF28F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67391431-91F0-49B5-96A0-DCC2240AF28F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67391431-91F0-49B5-96A0-DCC2240AF28F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B725308D-2B42-4422-994F-05A058194874}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B725308D-2B42-4422-994F-05A058194874}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B725308D-2B42-4422-994F-05A058194874}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B725308D-2B42-4422-994F-05A058194874}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {681A8C24-CD33-4BC1-BFD9-352CC7AAE10C}
 	EndGlobalSection
 EndGlobal

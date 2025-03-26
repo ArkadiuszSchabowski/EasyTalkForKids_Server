@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyTalkForKids.Repositories
 {
-    public class CategoryRepository : IRepository<Category>
+    public class CategoryRepository : IRepository<Category>, IRepositoryCategory
     {
         private readonly MyDbContext _context;
 
@@ -26,6 +26,16 @@ namespace EasyTalkForKids.Repositories
         public Category? Get(int id)
         {
             return _context.Categories.Include(c => c.Lessons).SingleOrDefault(c => c.Id == id);
+        }
+
+        public Category? GetByPolishName(string name)
+        {
+            return _context.Categories.Include(c => c.Lessons).SingleOrDefault(c => c.PolishName == name);
+        }
+
+        public Category? GetByEnglishName(string name)
+        {
+            return _context.Categories.Include(c => c.Lessons).SingleOrDefault(c => c.EnglishName == name);
         }
         public void Remove(Category item)
         {
