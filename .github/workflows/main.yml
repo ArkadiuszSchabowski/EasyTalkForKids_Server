@@ -30,4 +30,4 @@ jobs:
         run: dotnet build EasyTalkForKids_server.sln --no-restore
 
       - name: Run unit tests
-        run: dotnet test --filter Category=Unit
+        run: dotnet test EasyTalkForKids_server.sln --filter Category=Unit
