@@ -3,6 +3,7 @@ using EasyTalkForKids.Middleware;
 using EasyTalkForKids.Models;
 using EasyTalkForKids.Repositories;
 using EasyTalkForKids.Services;
+using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database;
 using EasyTalkForKids_Database.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +39,11 @@ builder.Services.AddScoped<IRemoveService<RemoveWordDto>, WordService>();
 builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
+
+builder.Services.AddScoped<IRepositoryCategory, CategoryRepository>();
+
+builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
+builder.Services.AddScoped<IValidator, Validator>();
 
 builder.Services.AddCors(options =>
 {
