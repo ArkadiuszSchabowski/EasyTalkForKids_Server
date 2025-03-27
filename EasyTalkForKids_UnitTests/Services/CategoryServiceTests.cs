@@ -38,6 +38,9 @@ namespace EasyTalkForKids_UnitTests.Services
                 EnglishName = "animals"
             };
 
+            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
+            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
+
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
 
@@ -65,6 +68,9 @@ namespace EasyTalkForKids_UnitTests.Services
                 EnglishName = "cat"
             };
 
+            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
+            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
+
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
 
@@ -91,6 +97,9 @@ namespace EasyTalkForKids_UnitTests.Services
                 PolishName = "kot",
                 EnglishName = "CAT"
             };
+
+            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
+            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
             _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
