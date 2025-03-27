@@ -6,6 +6,7 @@ using EasyTalkForKids.Services;
 using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database;
 using EasyTalkForKids_Database.Entities;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +54,11 @@ builder.Services.AddCors(options =>
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
+});
+
+builder.Services.Configure<ApiBehaviorOptions>(options =>
+{
+    options.SuppressModelStateInvalidFilter = true;
 });
 
 var app = builder.Build();

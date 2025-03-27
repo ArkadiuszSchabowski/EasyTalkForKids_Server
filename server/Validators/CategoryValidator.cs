@@ -11,6 +11,21 @@ namespace EasyTalkForKids.Validators
         {
             _repositoryCategory = repositoryCategory;
         }
+        public void ThrowIfPolishNameIsNull(string name)
+        {
+            if (name == null)
+            {
+                throw new BadRequestException("Polska nazwa kategorii jest wymagana!");
+            }
+        }
+
+        public void ThrowIfEnglishNameIsNull(string name)
+        {
+            if (name == null)
+            {
+                throw new BadRequestException("Angielska nazwa kategorii jest wymagana!");
+            }
+        }
         public void ThrowIfPolishNameExists(string name)
         {
             var category = _repositoryCategory.GetByPolishName(name);

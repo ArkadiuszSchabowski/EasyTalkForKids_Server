@@ -23,6 +23,9 @@ namespace EasyTalkForKids.Services
 
         public void Add(AddCategoryDto dto)
         {
+            _categoryValidator.ThrowIfPolishNameIsNull(dto.PolishName);
+            _categoryValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
+
             _validator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
             _validator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
 
