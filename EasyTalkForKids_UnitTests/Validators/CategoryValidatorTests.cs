@@ -1,4 +1,6 @@
-﻿using EasyTalkForKids.Exceptions;
+﻿#nullable disable
+
+using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database.Entities;
@@ -6,6 +8,7 @@ using Moq;
 
 namespace EasyTalkForKids_UnitTests.Validators
 {
+
     [Trait("Category", "Unit")]
     public class CategoryValidatorTests
     {
@@ -15,13 +18,65 @@ namespace EasyTalkForKids_UnitTests.Validators
             _mockRepositoryCategory = new Mock<IRepositoryCategory>();
         }
         [Fact]
+        public void ThrowIfPolishNameIsNull_WhenIsNotNull_ShouldNotThrowException()
+        {
+            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+
+            string name = "samochody";
+
+            var exception = Record.Exception(() => categoryValidator.ThrowIfPolishNameIsNull(name));
+
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void ThrowIfPolishNameIsNull_WhenIsNull_ShouldThrowBadRequestException()
+        {
+            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+
+            string name = null;
+
+            Action action = () => categoryValidator.ThrowIfPolishNameIsNull(name);
+
+            var exception = Assert.Throws<BadRequestException>(action);
+
+            Assert.Equal("Polska nazwa kategorii jest wymagana!", exception.Message);
+        }
+
+        [Fact]
+        public void ThrowIfEnglishNameIsNull_WhenIsNotNull_ShouldNotThrowException()
+        {
+            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+
+            string name = "cars";
+
+            var exception = Record.Exception(() => categoryValidator.ThrowIfEnglishNameIsNull(name));
+
+            Assert.Null(exception);
+        }
+
+        [Fact]
+        public void ThrowIfEnglishNameIsNull_WhenIsNull_ShouldThrowBadRequestException()
+        {
+            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+
+            string name = null;
+
+            Action action = () => categoryValidator.ThrowIfEnglishNameIsNull(name);
+
+            var exception = Assert.Throws<BadRequestException>(action);
+
+            Assert.Equal("Angielska nazwa kategorii jest wymagana!", exception.Message);
+        }
+
+        [Fact]
         public void ThrowIfPolishNameExists_WhenNameDoesNotExist_ShouldNotThrowException()
         {
             var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
 
             string name = "samochody";
 
-            _mockRepositoryCategory.Setup(x => x.GetByPolishName(name)).Returns((Category?)null);
+            _mockRepositoryCategory.Setup(x => x.GetByPolishName(name)).Returns((Category)null);
 
             var exception = Record.Exception(() => categoryValidator.ThrowIfPolishNameExists(name));
 
@@ -35,7 +90,7 @@ namespace EasyTalkForKids_UnitTests.Validators
 
             string name = "cars";
 
-            _mockRepositoryCategory.Setup(x => x.GetByEnglishName(name)).Returns((Category?)null);
+            _mockRepositoryCategory.Setup(x => x.GetByEnglishName(name)).Returns((Category)null);
 
             var exception = Record.Exception(() => categoryValidator.ThrowIfEnglishNameExists(name));
 
