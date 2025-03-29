@@ -11,13 +11,13 @@ namespace EasyTalkForKids_UnitTests.Services
     public class CategoryServiceTests
     {
         private readonly Mock<IRepository<Category>> _mockRepository;
-        private readonly Mock<IValidator> _mockValidator;
+        private readonly Mock<INameValidator> _mockValidator;
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
         private readonly Mock<IMapper> _mockMapper;
         public CategoryServiceTests()
         {
             _mockRepository = new Mock<IRepository<Category>>();
-            _mockValidator = new Mock<IValidator>();
+            _mockValidator = new Mock<INameValidator>();
             _mockCategoryValidator = new Mock<ICategoryValidator>();
             _mockMapper = new Mock<IMapper>();
         }

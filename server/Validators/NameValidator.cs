@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace EasyTalkForKids.Validators
 {
-    public class Validator : IValidator
+    public class NameValidator : INameValidator
     {
         public void ThrowIfNumbersOrSpecialCharacters(string name)
         {
