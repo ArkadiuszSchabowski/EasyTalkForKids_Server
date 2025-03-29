@@ -4,7 +4,7 @@ using EasyTalkForKids.Validators;
 namespace EasyTalkForKids_UnitTests.Validators
 {
     [Trait("Category", "Unit")]
-    public class ValidatorTests
+    public class NameValidatorTests
     {
         [Theory]
         [InlineData("house")]
@@ -12,7 +12,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("Aeroplane")]
         public void ThrowIfNumbersOrSpecialCharacters_WhenInputIsValid_ShouldNotThrowException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             var exception = Record.Exception(() => validator.ThrowIfNumbersOrSpecialCharacters(name));
 
@@ -26,7 +26,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("12345")]
         public void ThrowIfNumbersOrSpecialCharacters_WithNumber_ShouldThrowBadRequestException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             Action action = () => validator.ThrowIfNumbersOrSpecialCharacters(name);
 
@@ -42,7 +42,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("@X@^&A")]
         public void ThrowIfNumbersOrSpecialCharacters_WithSpecialCharacter_ShouldThrowBadRequestException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             Action action = () => validator.ThrowIfNumbersOrSpecialCharacters(name);
 
@@ -57,7 +57,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("Samochód osobowy")]
         public void ValidateNameLength_WhenInputIsValid_ShouldNotThrowException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             var exception = Record.Exception(() => validator.ValidateNameLength(name));
 
@@ -70,7 +70,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("ab")]
         public void ValidateNameLength_WhenNameIsTooShort_ShouldThrowBadRequestException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             var action = () => validator.ValidateNameLength(name);
 
@@ -85,7 +85,7 @@ namespace EasyTalkForKids_UnitTests.Validators
 
         public void ValidateNameLength_WhenNameIsTooLong_ShouldThrowBadRequestException(string name)
         {
-            var validator = new Validator();
+            var validator = new NameValidator();
 
             var action = () => validator.ValidateNameLength(name);
 

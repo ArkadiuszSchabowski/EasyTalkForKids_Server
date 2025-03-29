@@ -44,7 +44,7 @@ builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 builder.Services.AddScoped<IRepositoryCategory, CategoryRepository>();
 
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
-builder.Services.AddScoped<IValidator, Validator>();
+builder.Services.AddScoped<INameValidator, NameValidator>();
 
 builder.Services.AddCors(options =>
 {

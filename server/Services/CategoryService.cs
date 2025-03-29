@@ -9,14 +9,14 @@ namespace EasyTalkForKids.Services
     public class CategoryService : IAddService<AddCategoryDto>, IGetService<GetCategoryDto>, IRemoveService<RemoveCategoryDto>
     {
         private readonly IRepository<Category> _repository;
-        private readonly IValidator _validator;
+        private readonly INameValidator _nameValidator;
         private readonly ICategoryValidator _categoryValidator;
         private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category> repository, IValidator validator, ICategoryValidator categoryValidator, IMapper mapper)
+        public CategoryService(IRepository<Category> repository, INameValidator nameValidator, ICategoryValidator categoryValidator, IMapper mapper)
         {
             _repository = repository;
-            _validator = validator;
+            _nameValidator = nameValidator;
             _categoryValidator = categoryValidator;
             _mapper = mapper;
         }
@@ -26,11 +26,11 @@ namespace EasyTalkForKids.Services
             _categoryValidator.ThrowIfPolishNameIsNull(dto.PolishName);
             _categoryValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
 
-            _validator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
-            _validator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
+            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
+            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
 
-            _validator.ValidateNameLength(dto.PolishName);
-            _validator.ValidateNameLength(dto.EnglishName);
+            _nameValidator.ValidateNameLength(dto.PolishName);
+            _nameValidator.ValidateNameLength(dto.EnglishName);
 
             dto.PolishName = dto.PolishName.ToLower();
             dto.EnglishName = dto.EnglishName.ToLower();
