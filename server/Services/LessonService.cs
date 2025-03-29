@@ -10,24 +10,34 @@ namespace EasyTalkForKids.Services
     public class LessonService : IAddService<AddLessonDto>, IGetService<GetLessonDto>, IRemoveService<RemoveLessonDto>
     {
         private readonly IRepository<Lesson> _repository;
-        private readonly IRepository<Category> _categoryRepository;
+        private readonly INameValidator _nameValidator;
+        private readonly ILessonValidator _lessonValidator;
         private readonly IMapper _mapper;
+        
 
-        public LessonService(IRepository<Lesson> repository, IRepository<Category> categoryRepository, IMapper mapper)
+        public LessonService(IRepository<Lesson> repository, INameValidator nameValidator, ILessonValidator lessonValidator, IMapper mapper)
         {
             _repository = repository;
-            _categoryRepository = categoryRepository;
+            _lessonValidator = lessonValidator;
             _mapper = mapper;
+            _nameValidator = nameValidator;
         }
 
         public void Add(AddLessonDto dto)
         {
-            var category = _categoryRepository.Get(dto.CategoryId);
+            _lessonValidator.ThrowIfPolishNameIsNull(dto.PolishName);
+            _lessonValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
 
-            if (category == null)
-            {
-                throw new NotFoundException("Nie znaleziono kategorii o takim numerze Id!");
-            }
+            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
+            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
+
+            _nameValidator.ValidateNameLength(dto.PolishName);
+            _nameValidator.ValidateNameLength(dto.EnglishName);
+
+            _lessonValidator.ThrowIfCategoryIdDoesNotExists(dto.CategoryId);
+
+            dto.PolishName = dto.PolishName.ToLower();
+            dto.EnglishName = dto.EnglishName.ToLower();
 
             var lesson = _mapper.Map<Lesson>(dto);
 
