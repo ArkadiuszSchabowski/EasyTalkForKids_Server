@@ -11,20 +11,20 @@ namespace EasyTalkForKids_UnitTests.Services
     public class CategoryServiceTests
     {
         private readonly Mock<IRepository<Category>> _mockRepository;
-        private readonly Mock<INameValidator> _mockValidator;
+        private readonly Mock<INameValidator> _mockNameValidator;
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
         private readonly Mock<IMapper> _mockMapper;
         public CategoryServiceTests()
         {
             _mockRepository = new Mock<IRepository<Category>>();
-            _mockValidator = new Mock<INameValidator>();
+            _mockNameValidator = new Mock<INameValidator>();
             _mockCategoryValidator = new Mock<ICategoryValidator>();
             _mockMapper = new Mock<IMapper>();
         }
         [Fact]
         public void Add_WhenCorrectData_ShouldPassCategoryToRepository()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockValidator.Object, _mockCategoryValidator.Object ,_mockMapper.Object);
+            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object ,_mockMapper.Object);
 
             var dto = new AddCategoryDto()
             {
@@ -41,11 +41,8 @@ namespace EasyTalkForKids_UnitTests.Services
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
-
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.PolishName));
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.EnglishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
 
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));
@@ -60,7 +57,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenPolishNameContainsUppercaseLetters_ShouldConvertToLowercase()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
+            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
 
             var dto = new AddCategoryDto
             {
@@ -71,11 +68,8 @@ namespace EasyTalkForKids_UnitTests.Services
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
-
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.PolishName));
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.EnglishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
 
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));
@@ -90,7 +84,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenEnglishNameContainsUppercaseLetters_ShouldConvertToLowercase()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
+            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
 
             var dto = new AddCategoryDto
             {
@@ -101,11 +95,8 @@ namespace EasyTalkForKids_UnitTests.Services
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
-            _mockValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
-
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.PolishName));
-            _mockValidator.Setup(x => x.ValidateNameLength(dto.EnglishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
 
             _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
             _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));

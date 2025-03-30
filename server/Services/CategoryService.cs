@@ -26,11 +26,8 @@ namespace EasyTalkForKids.Services
             _categoryValidator.ThrowIfPolishNameIsNull(dto.PolishName);
             _categoryValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
 
-            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
-            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
-
-            _nameValidator.ValidateNameLength(dto.PolishName);
-            _nameValidator.ValidateNameLength(dto.EnglishName);
+            _nameValidator.ValidateName(dto.PolishName);
+            _nameValidator.ValidateName(dto.EnglishName);
 
             dto.PolishName = dto.PolishName.ToLower();
             dto.EnglishName = dto.EnglishName.ToLower();

@@ -6,18 +6,6 @@ namespace EasyTalkForKids_UnitTests.Validators
     [Trait("Category", "Unit")]
     public class NameValidatorTests
     {
-        [Theory]
-        [InlineData("house")]
-        [InlineData("APARTMENT")]
-        [InlineData("Aeroplane")]
-        public void ThrowIfNumbersOrSpecialCharacters_WhenInputIsValid_ShouldNotThrowException(string name)
-        {
-            var validator = new NameValidator();
-
-            var exception = Record.Exception(() => validator.ThrowIfNumbersOrSpecialCharacters(name));
-
-            Assert.Null(exception);
-        }
 
         [Theory]
         [InlineData("house99")]
@@ -28,7 +16,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         {
             var validator = new NameValidator();
 
-            Action action = () => validator.ThrowIfNumbersOrSpecialCharacters(name);
+            Action action = () => validator.ValidateName(name);
 
             var exception = Assert.Throws<BadRequestException>(action);
 
@@ -44,22 +32,22 @@ namespace EasyTalkForKids_UnitTests.Validators
         {
             var validator = new NameValidator();
 
-            Action action = () => validator.ThrowIfNumbersOrSpecialCharacters(name);
+            Action action = () => validator.ValidateName(name);
 
             var exception = Assert.Throws<BadRequestException>(action);
 
             Assert.Equal("Nazwa nie może zawierać cyfr oraz znaków specjalnych!", exception.Message);
         }
-
         [Theory]
-        [InlineData("Auto")]
+        [InlineData("house")]
+        [InlineData("APARTMENT")]
+        [InlineData("Aeroplane")]
         [InlineData("Samochód")]
-        [InlineData("Samochód osobowy")]
-        public void ValidateNameLength_WhenInputIsValid_ShouldNotThrowException(string name)
+        public void ValidateName_WhenInputIsValid_ShouldNotThrowException(string name)
         {
             var validator = new NameValidator();
 
-            var exception = Record.Exception(() => validator.ValidateNameLength(name));
+            var exception = Record.Exception(() => validator.ValidateName(name));
 
             Assert.Null(exception);
         }
@@ -68,11 +56,11 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("")]
         [InlineData("a")]
         [InlineData("ab")]
-        public void ValidateNameLength_WhenNameIsTooShort_ShouldThrowBadRequestException(string name)
+        public void ValidateName_WhenNameIsTooShort_ShouldThrowBadRequestException(string name)
         {
             var validator = new NameValidator();
 
-            var action = () => validator.ValidateNameLength(name);
+            var action = () => validator.ValidateName(name);
 
             var exception = Assert.Throws<BadRequestException>(action);
 
@@ -83,11 +71,11 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("VeryLongNameVeryLongNameVeryLongName")]
         [InlineData("ThisNameIsLongerThan25CharactersThisNameIsLongerThan25Characters")]
 
-        public void ValidateNameLength_WhenNameIsTooLong_ShouldThrowBadRequestException(string name)
+        public void ValidateName_WhenNameIsTooLong_ShouldThrowBadRequestException(string name)
         {
             var validator = new NameValidator();
 
-            var action = () => validator.ValidateNameLength(name);
+            var action = () => validator.ValidateName(name);
 
             var exception = Assert.Throws<BadRequestException>(action);
 

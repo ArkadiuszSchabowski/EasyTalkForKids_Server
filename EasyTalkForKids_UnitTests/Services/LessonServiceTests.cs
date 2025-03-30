@@ -2,7 +2,6 @@
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids.Services;
-using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database.Entities;
 using Moq;
 
@@ -44,13 +43,10 @@ namespace EasyTalkForKids_UnitTests.Services
             };
 
             _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.EnglishName));
+            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
-            _mockNameValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateNameLength(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateNameLength(dto.EnglishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
 
             _mockLessonValidator.Setup(x => x.ThrowIfCategoryIdDoesNotExists(dto.CategoryId));
 

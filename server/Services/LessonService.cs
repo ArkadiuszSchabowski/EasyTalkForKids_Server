@@ -28,11 +28,8 @@ namespace EasyTalkForKids.Services
             _lessonValidator.ThrowIfPolishNameIsNull(dto.PolishName);
             _lessonValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
 
-            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.PolishName);
-            _nameValidator.ThrowIfNumbersOrSpecialCharacters(dto.EnglishName);
-
-            _nameValidator.ValidateNameLength(dto.PolishName);
-            _nameValidator.ValidateNameLength(dto.EnglishName);
+            _nameValidator.ValidateName(dto.PolishName);
+            _nameValidator.ValidateName(dto.EnglishName);
 
             _lessonValidator.ThrowIfCategoryIdDoesNotExists(dto.CategoryId);
 
