@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids_Database.Entities;
@@ -9,14 +8,18 @@ namespace EasyTalkForKids.Services
     public class WordService : IAddService<AddWordDto>, IGetService<GetWordDto>,
         IRemoveService<RemoveWordDto>
     {
-        private readonly IRepository<Word> _repository;
+        private readonly IRepository<Word> _wordRepository;
         private readonly IRepository<Lesson> _lessonRepository;
+        private readonly IWordValidator _wordValidator;
+        private readonly ILessonValidator _lessonValidator;
         private readonly IMapper _mapper;
 
-        public WordService(IRepository<Word> repository, IRepository<Lesson> lessonRepository,IMapper mapper)
+        public WordService(IRepository<Word> wordRepository, IRepository<Lesson> lessonRepository, IWordValidator wordValidator, ILessonValidator lessonValidator, IMapper mapper)
         {
-            _repository = repository;
+            _wordRepository = wordRepository;
             _lessonRepository = lessonRepository;
+            _wordValidator = wordValidator;
+            _lessonValidator = lessonValidator;
             _mapper = mapper;
         }
 
@@ -24,19 +27,16 @@ namespace EasyTalkForKids.Services
         {
             var lesson = _lessonRepository.Get(dto.LessonId);
 
-            if(lesson == null)
-            {
-                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
-            }
+            _lessonValidator.ThrowIfLessonIsNull(lesson);
 
             var word = _mapper.Map<Word>(dto);
 
-            _repository.Add(word);
+            _wordRepository.Add(word);
         }
 
         public List<GetWordDto> Get()
         {
-            List<Word> words = _repository.Get();
+            List<Word> words = _wordRepository.Get();
 
             var dto = _mapper.Map<List<GetWordDto>>(words);
 
@@ -45,12 +45,9 @@ namespace EasyTalkForKids.Services
 
         public GetWordDto Get(int id)
         {
-            Word? word = _repository.Get(id);
+            Word? word = _wordRepository.Get(id);
 
-            if (word == null)
-            {
-                throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
-            }
+            _wordValidator.ThrowIfWordIsNull(word);
 
             var dto = _mapper.Map<GetWordDto>(word);
 
@@ -59,14 +56,11 @@ namespace EasyTalkForKids.Services
 
         public void Remove(int id)
         {
-            Word? word = _repository.Get(id);
+            Word? word = _wordRepository.Get(id);
 
-            if(word == null)
-            {
-                throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
-            }
+            _wordValidator.ThrowIfWordIsNull(word);
 
-            _repository.Remove(word);
+            _wordRepository.Remove(word!);
         }
     }
 }

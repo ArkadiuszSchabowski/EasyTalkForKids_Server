@@ -8,16 +8,16 @@ namespace EasyTalkForKids.Services
 {
     public class CategoryService : IAddService<AddCategoryDto>, IGetService<GetCategoryDto>, IRemoveService<RemoveCategoryDto>
     {
-        private readonly IRepository<Category> _repository;
-        private readonly INameValidator _nameValidator;
+        private readonly IRepository<Category> _categoryRepository;
         private readonly ICategoryValidator _categoryValidator;
+        private readonly INameValidator _nameValidator;
         private readonly IMapper _mapper;
 
-        public CategoryService(IRepository<Category> repository, INameValidator nameValidator, ICategoryValidator categoryValidator, IMapper mapper)
+        public CategoryService(IRepository<Category> categoryRepository, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper)
         {
-            _repository = repository;
-            _nameValidator = nameValidator;
+            _categoryRepository = categoryRepository;
             _categoryValidator = categoryValidator;
+            _nameValidator = nameValidator;
             _mapper = mapper;
         }
 
@@ -37,12 +37,12 @@ namespace EasyTalkForKids.Services
 
             var category = _mapper.Map<Category>(dto);
 
-            _repository.Add(category);
+            _categoryRepository.Add(category);
         }
 
         public List<GetCategoryDto> Get()
         {
-            List<Category> categories = _repository.Get();
+            List<Category> categories = _categoryRepository.Get();
 
             var dto = _mapper.Map<List<GetCategoryDto>>(categories);
 
@@ -51,12 +51,9 @@ namespace EasyTalkForKids.Services
 
         public GetCategoryDto Get(int id)
         {
-            Category? category = _repository.Get(id);
+            Category? category = _categoryRepository.Get(id);
 
-            if (category == null)
-            {
-                throw new NotFoundException("Nie znaleziono kategorii o takim numerze Id!");
-            }
+            _categoryValidator.ThrowIfCategoryIsNull(category);
 
             var dto = _mapper.Map<GetCategoryDto>(category);
 
@@ -65,14 +62,11 @@ namespace EasyTalkForKids.Services
 
         public void Remove(int id)
         {
-            Category? category = _repository.Get(id);
+            Category? category = _categoryRepository.Get(id);
 
-            if (category == null)
-            {
-                throw new NotFoundException("Nie znaleziono kategorii o takim numerze Id!");
-            }
+            _categoryValidator.ThrowIfCategoryIsNull(category);
 
-            _repository.Remove(category);
+            _categoryRepository.Remove(category!);
         }
     }
 }
