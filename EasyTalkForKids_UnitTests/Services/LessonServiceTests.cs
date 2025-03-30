@@ -2,6 +2,7 @@
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
 using EasyTalkForKids.Services;
+using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database.Entities;
 using Moq;
 
@@ -45,8 +46,8 @@ namespace EasyTalkForKids_UnitTests.Services
             _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
             _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
 
-            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
 
             _mockLessonValidator.Setup(x => x.ThrowIfCategoryIdDoesNotExists(dto.CategoryId));
 
@@ -55,6 +56,29 @@ namespace EasyTalkForKids_UnitTests.Services
             lessonService.Add(dto);
 
             _mockRepository.Verify(x => x.Add(lesson), Times.Once);
+        }
+        [Fact]
+        public void Add_WhenPolishNameContainsUppercaseLetters_ShouldConvertToLowercase()
+        {
+            var lessonService = new LessonService(_mockRepository.Object, _mockNameValidator.Object, _mockLessonValidator.Object, _mockMapper.Object);
+
+            var dto = new AddLessonDto
+            {
+                PolishName = "LeKCJa 1",
+                EnglishName = "lesson 1"
+            };
+
+            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
+            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
+
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
+
+            _mockLessonValidator.Setup(x => x.ThrowIfCategoryIdDoesNotExists(dto.CategoryId));
+
+            lessonService.Add(dto);
+
+            Assert.Equal("lekcja 1", dto.PolishName);
         }
     }
 }
