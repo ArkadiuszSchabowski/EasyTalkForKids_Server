@@ -80,5 +80,29 @@ namespace EasyTalkForKids_UnitTests.Services
 
             Assert.Equal("lekcja 1", dto.PolishName);
         }
+
+        [Fact]
+        public void Add_WhenEnglishNameContainsUppercaseLetters_ShouldConvertToLowercase()
+        {
+            var lessonService = new LessonService(_mockRepository.Object, _mockNameValidator.Object, _mockLessonValidator.Object, _mockMapper.Object);
+
+            var dto = new AddLessonDto
+            {
+                PolishName = "lekcja 1",
+                EnglishName = "LEsSon 1"
+            };
+
+            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
+            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
+
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
+            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
+
+            _mockLessonValidator.Setup(x => x.ThrowIfCategoryIdDoesNotExists(dto.CategoryId));
+
+            lessonService.Add(dto);
+
+            Assert.Equal("lesson 1", dto.EnglishName);
+        }
     }
 }
