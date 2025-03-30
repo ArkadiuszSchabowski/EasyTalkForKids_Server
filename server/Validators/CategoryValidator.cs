@@ -1,5 +1,6 @@
 ﻿using EasyTalkForKids.Exceptions;
 using EasyTalkForKids.Interfaces;
+using EasyTalkForKids_Database.Entities;
 
 namespace EasyTalkForKids.Validators
 {
@@ -43,6 +44,13 @@ namespace EasyTalkForKids.Validators
             if (category != null)
             {
                 throw new ConflictException("Angielska nazwa kategorii isnieje już w bazie danych!");
+            }
+        }
+        public void ThrowIfCategoryIsNull(Category? category)
+        {
+            if (category == null)
+            {
+                throw new NotFoundException("Nie znaleziono kategorii o takim numerze Id!");
             }
         }
     }

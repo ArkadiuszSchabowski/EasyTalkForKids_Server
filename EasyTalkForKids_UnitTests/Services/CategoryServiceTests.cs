@@ -10,13 +10,13 @@ namespace EasyTalkForKids_UnitTests.Services
     [Trait("Category", "Unit")]
     public class CategoryServiceTests
     {
-        private readonly Mock<IRepository<Category>> _mockRepository;
+        private readonly Mock<IRepository<Category>> _mockCategoryRepository;
         private readonly Mock<INameValidator> _mockNameValidator;
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
         private readonly Mock<IMapper> _mockMapper;
         public CategoryServiceTests()
         {
-            _mockRepository = new Mock<IRepository<Category>>();
+            _mockCategoryRepository = new Mock<IRepository<Category>>();
             _mockNameValidator = new Mock<INameValidator>();
             _mockCategoryValidator = new Mock<ICategoryValidator>();
             _mockMapper = new Mock<IMapper>();
@@ -24,7 +24,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenCorrectData_ShouldPassCategoryToRepository()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object ,_mockMapper.Object);
+            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
 
             var dto = new AddCategoryDto()
             {
@@ -51,13 +51,13 @@ namespace EasyTalkForKids_UnitTests.Services
 
             categoryService.Add(dto);
 
-            _mockRepository.Verify(x => x.Add(category), Times.Once);
+            _mockCategoryRepository.Verify(x => x.Add(category), Times.Once);
         }
 
         [Fact]
         public void Add_WhenPolishNameContainsUppercaseLetters_ShouldConvertToLowercase()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
+            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
 
             var dto = new AddCategoryDto
             {
@@ -84,7 +84,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenEnglishNameContainsUppercaseLetters_ShouldConvertToLowercase()
         {
-            var categoryService = new CategoryService(_mockRepository.Object, _mockNameValidator.Object, _mockCategoryValidator.Object, _mockMapper.Object);
+            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
 
             var dto = new AddCategoryDto
             {

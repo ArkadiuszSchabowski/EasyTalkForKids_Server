@@ -28,13 +28,11 @@ namespace EasyTalkForKids.Validators
                 throw new BadRequestException("Angielska nazwa lekcji jest wymagana!");
             }
         }
-        public void ThrowIfCategoryIdDoesNotExists(int id)
+        public void ThrowIfLessonIsNull(Lesson? lesson)
         {
-            var category = _categoryRepository.Get(id);
-
-            if (category != null)
+            if (lesson == null)
             {
-                throw new ConflictException("Kategoria o podanym id nie została znaleziona!");
+                throw new NotFoundException("Nie znaleziono lekcji o takim numerze Id!");
             }
         }
     }
