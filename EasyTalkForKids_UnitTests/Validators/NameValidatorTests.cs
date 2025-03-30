@@ -12,7 +12,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("11house")]
         [InlineData("7HO1USE9")]
         [InlineData("12345")]
-        public void ThrowIfNumbersOrSpecialCharacters_WithNumber_ShouldThrowBadRequestException(string name)
+        public void ValidateName_WithNumber_ShouldThrowBadRequestException(string name)
         {
             var validator = new NameValidator();
 
@@ -28,7 +28,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("@house")]
         [InlineData(" HOUSE ")]
         [InlineData("@X@^&A")]
-        public void ThrowIfNumbersOrSpecialCharacters_WithSpecialCharacter_ShouldThrowBadRequestException(string name)
+        public void ValidateName_WithSpecialCharacter_ShouldThrowBadRequestException(string name)
         {
             var validator = new NameValidator();
 
