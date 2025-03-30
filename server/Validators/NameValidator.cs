@@ -24,7 +24,18 @@ namespace EasyTalkForKids.Validators
             {
                 throw new BadRequestException("Nazwa nie może zawierać cyfr oraz znaków specjalnych!");
             } 
+        }
+        public void ValidateNameAllowingSpaces(string name)
+        {
+            if (name.Length < 5)
+            {
+                throw new BadRequestException("Nazwa nie może być krótsza niż 3 litery!");
+            }
 
+            if (name.Length > 50)
+            {
+                throw new BadRequestException("Nazwa nie może być dłuższa niż 25 liter!");
+            }
         }
     }
 }
