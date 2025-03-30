@@ -6,17 +6,7 @@ namespace EasyTalkForKids.Validators
 {
     public class NameValidator : INameValidator
     {
-        public void ThrowIfNumbersOrSpecialCharacters(string name)
-        {
-            string pattern = "^[^0-9\\W_]+$";
-
-            if (!Regex.IsMatch(name, pattern))
-            {
-                throw new BadRequestException("Nazwa nie może zawierać cyfr oraz znaków specjalnych!");
-            } 
-        }
-
-        public void ValidateNameLength(string name)
+        public void ValidateName(string name)
         {
             if(name.Length < 3)
             {
@@ -27,6 +17,14 @@ namespace EasyTalkForKids.Validators
             {
                 throw new BadRequestException("Nazwa nie może być dłuższa niż 25 liter!");
             }
+
+            string pattern = "^[^0-9\\W_]+$";
+
+            if (!Regex.IsMatch(name, pattern))
+            {
+                throw new BadRequestException("Nazwa nie może zawierać cyfr oraz znaków specjalnych!");
+            } 
+
         }
     }
 }
