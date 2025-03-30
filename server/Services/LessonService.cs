@@ -12,8 +12,7 @@ namespace EasyTalkForKids.Services
         private readonly IRepository<Lesson> _repository;
         private readonly INameValidator _nameValidator;
         private readonly ILessonValidator _lessonValidator;
-        private readonly IMapper _mapper;
-        
+        private readonly IMapper _mapper;      
 
         public LessonService(IRepository<Lesson> repository, INameValidator nameValidator, ILessonValidator lessonValidator, IMapper mapper)
         {
@@ -28,8 +27,8 @@ namespace EasyTalkForKids.Services
             _lessonValidator.ThrowIfPolishNameIsNull(dto.PolishName);
             _lessonValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
 
-            _nameValidator.ValidateName(dto.PolishName);
-            _nameValidator.ValidateName(dto.EnglishName);
+            _nameValidator.ValidateNameAllowingSpaces(dto.PolishName);
+            _nameValidator.ValidateNameAllowingSpaces(dto.EnglishName);
 
             _lessonValidator.ThrowIfCategoryIdDoesNotExists(dto.CategoryId);
 
