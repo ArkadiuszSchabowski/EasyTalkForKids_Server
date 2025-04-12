@@ -38,15 +38,6 @@ namespace EasyTalkForKids_UnitTests.Services
                 EnglishName = "animals"
             };
 
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));
-
             _mockMapper.Setup(x => x.Map<Category>(dto)).Returns(category);   
 
             categoryService.Add(dto);
@@ -65,17 +56,6 @@ namespace EasyTalkForKids_UnitTests.Services
                 EnglishName = "cat"
             };
 
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));
-
-            _mockMapper.Setup(x => x.Map<Category>(dto));
-
             categoryService.Add(dto);
 
             Assert.Equal("kot", dto.PolishName);
@@ -91,17 +71,6 @@ namespace EasyTalkForKids_UnitTests.Services
                 PolishName = "kot",
                 EnglishName = "CAT"
             };
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateName(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateName(dto.EnglishName));
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfPolishNameExists(dto.PolishName));
-            _mockCategoryValidator.Setup(x => x.ThrowIfEnglishNameExists(dto.EnglishName));
-
-            _mockMapper.Setup(x => x.Map<Category>(dto));
 
             categoryService.Add(dto);
 

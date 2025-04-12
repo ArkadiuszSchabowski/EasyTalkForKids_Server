@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
-using EasyTalkForKids.Repositories;
 using EasyTalkForKids.Services;
-using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database.Entities;
 using Moq;
 
@@ -50,15 +48,7 @@ namespace EasyTalkForKids_UnitTests.Services
 
             var category = new Category();
 
-            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
-
             _mockCategoryRepository.Setup(x =>x.Get(dto.CategoryId)).Returns(category);
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfCategoryIsNull(category));
 
             _mockMapper.Setup(x => x.Map<Lesson>(dto)).Returns(lesson);
 
@@ -79,15 +69,7 @@ namespace EasyTalkForKids_UnitTests.Services
 
             var category = new Category();
 
-            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
-
             _mockCategoryRepository.Setup(x => x.Get(dto.CategoryId)).Returns(category);
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfCategoryIsNull(category));
 
             lessonService.Add(dto);
 
@@ -107,15 +89,7 @@ namespace EasyTalkForKids_UnitTests.Services
 
             var category = new Category();
 
-            _mockLessonValidator.Setup(x => x.ThrowIfPolishNameIsNull(dto.PolishName));
-            _mockLessonValidator.Setup(x => x.ThrowIfEnglishNameIsNull(dto.EnglishName));
-
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.PolishName));
-            _mockNameValidator.Setup(x => x.ValidateNameAllowingSpaces(dto.EnglishName));
-
             _mockCategoryRepository.Setup(x => x.Get(dto.CategoryId)).Returns(category);
-
-            _mockCategoryValidator.Setup(x => x.ThrowIfCategoryIsNull(category));
 
             lessonService.Add(dto);
 

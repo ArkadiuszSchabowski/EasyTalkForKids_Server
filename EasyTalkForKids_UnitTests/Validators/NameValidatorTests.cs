@@ -81,5 +81,17 @@ namespace EasyTalkForKids_UnitTests.Validators
 
             Assert.Equal("Nazwa nie może być dłuższa niż 25 liter!", exception.Message);
         }
+        [Theory]
+        [InlineData("Name with spaces")]
+        [InlineData("NameWithoutSpaces")]
+        [InlineData("TEST")]
+        public void ValidateNameAllowingSpaces_WhenValidData_ShouldPass(string name)
+        {
+            var validator = new NameValidator();
+
+            var exception = Record.Exception(() => validator.ValidateNameAllowingSpaces(name));
+
+            Assert.Null(exception);
+        }
     }
 }

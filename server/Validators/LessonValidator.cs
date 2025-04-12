@@ -6,13 +6,6 @@ namespace EasyTalkForKids.Validators
 {
     public class LessonValidator : ILessonValidator
     {
-        private readonly IRepository<Category> _categoryRepository;
-
-        public LessonValidator(IRepository<Category> categoryRepository)
-        {
-            _categoryRepository = categoryRepository;
-        }
-
         public void ThrowIfPolishNameIsNull(string name)
         {
             if (name == null)
