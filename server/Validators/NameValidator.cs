@@ -27,14 +27,14 @@ namespace EasyTalkForKids.Validators
         }
         public void ValidateNameAllowingSpaces(string name)
         {
-            if (name.Length < 5)
+            if (name.Length < 3)
             {
-                throw new BadRequestException("Nazwa nie może być krótsza niż 3 litery!");
+                throw new BadRequestException("Nazwa nie może być krótsza niż 3 znaki!");
             }
 
             if (name.Length > 50)
             {
-                throw new BadRequestException("Nazwa nie może być dłuższa niż 25 liter!");
+                throw new BadRequestException("Nazwa nie może być dłuższa niż 50 znaków!");
             }
         }
     }
