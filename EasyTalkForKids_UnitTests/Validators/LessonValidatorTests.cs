@@ -1,6 +1,6 @@
 ﻿namespace EasyTalkForKids_UnitTests.Validators
 {
-    class LessonValidatorTests
+    public class LessonValidatorTests
     {
     }
 }
