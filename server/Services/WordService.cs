@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Models;
-using EasyTalkForKids.Validators;
 using EasyTalkForKids_Database.Entities;
 
 namespace EasyTalkForKids.Services
@@ -15,8 +14,9 @@ namespace EasyTalkForKids.Services
         private readonly ILessonValidator _lessonValidator;
         private readonly INameValidator _nameValidator;
         private readonly IMapper _mapper;
+        private readonly ITextFormatter _textFormatter;
 
-        public WordService(IRepository<Word> wordRepository, IRepository<Lesson> lessonRepository, IWordValidator wordValidator, ILessonValidator lessonValidator, INameValidator nameValidator, IMapper mapper)
+        public WordService(IRepository<Word> wordRepository, IRepository<Lesson> lessonRepository, IWordValidator wordValidator, ILessonValidator lessonValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
         {
             _wordRepository = wordRepository;
             _lessonRepository = lessonRepository;
@@ -24,12 +24,16 @@ namespace EasyTalkForKids.Services
             _lessonValidator = lessonValidator;
             _nameValidator = nameValidator;
             _mapper = mapper;
+            _textFormatter = textFormatter;
         }
 
         public void Add(AddWordDto dto)
         {
-            _wordValidator.ThrowIfPolishNameIsNull(dto.PolishName);
-            _wordValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
+            dto.PolishName = _textFormatter.NormalizeText(dto.PolishName);
+            dto.EnglishName = _textFormatter.NormalizeText(dto.EnglishName);
+
+            _wordValidator.ThrowIfPolishNameIsNullOrEmpty(dto.PolishName);
+            _wordValidator.ThrowIfEnglishNameIsNullOrEmpty(dto.EnglishName);
 
             _nameValidator.ValidateName(dto.PolishName);
             _nameValidator.ValidateName(dto.EnglishName);
@@ -37,9 +41,6 @@ namespace EasyTalkForKids.Services
             var lesson = _lessonRepository.Get(dto.LessonId);
 
             _lessonValidator.ThrowIfLessonIsNull(lesson);
-
-            dto.PolishName = dto.PolishName.ToLower();
-            dto.EnglishName = dto.EnglishName.ToLower();
 
             var word = _mapper.Map<Word>(dto);
 

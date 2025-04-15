@@ -1,3 +1,4 @@
+using EasyTalkForKids.Formatters;
 using EasyTalkForKids.Interfaces;
 using EasyTalkForKids.Middleware;
 using EasyTalkForKids.Models;
@@ -47,6 +48,8 @@ builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<ILessonValidator, LessonValidator>();
 builder.Services.AddScoped<IWordValidator, WordValidator>();
 builder.Services.AddScoped<INameValidator, NameValidator>();
+
+builder.Services.AddScoped<ITextFormatter, TextFormatter>();
 
 builder.Services.AddCors(options =>
 {

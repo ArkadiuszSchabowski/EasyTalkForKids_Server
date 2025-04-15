@@ -12,17 +12,17 @@ namespace EasyTalkForKids.Validators
         {
             _repositoryCategory = repositoryCategory;
         }
-        public void ThrowIfPolishNameIsNull(string name)
+        public void ThrowIfPolishNameIsNullOrEmpty(string name)
         {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new BadRequestException("Polska nazwa kategorii jest wymagana!");
             }
         }
 
-        public void ThrowIfEnglishNameIsNull(string name)
+        public void ThrowIfEnglishNameIsNullOrEmpty(string name)
         {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new BadRequestException("Angielska nazwa kategorii jest wymagana!");
             }
@@ -33,7 +33,7 @@ namespace EasyTalkForKids.Validators
 
             if (category != null)
             {
-                throw new ConflictException("Polska nazwa kategorii isnieje już w bazie danych!");
+                throw new ConflictException("Polska nazwa kategorii istnieje już w bazie danych!");
             }
         }
 
@@ -43,7 +43,7 @@ namespace EasyTalkForKids.Validators
 
             if (category != null)
             {
-                throw new ConflictException("Angielska nazwa kategorii isnieje już w bazie danych!");
+                throw new ConflictException("Angielska nazwa kategorii istnieje już w bazie danych!");
             }
         }
         public void ThrowIfCategoryIsNull(Category? category)

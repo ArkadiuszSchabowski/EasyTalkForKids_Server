@@ -6,22 +6,20 @@ namespace EasyTalkForKids.Validators
 {
     public class WordValidator : IWordValidator
     {
-        public void ThrowIfEnglishNameIsNull(string name)
+        public void ThrowIfPolishNameIsNullOrEmpty(string name)
         {
-            if (name == null)
-            {
-                throw new BadRequestException("Angielska nazwa słowa jest wymagana!");
-            }
-        }
-
-        public void ThrowIfPolishNameIsNull(string name)
-        {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new BadRequestException("Polska nazwa słowa jest wymagana!");
             }
         }
-
+        public void ThrowIfEnglishNameIsNullOrEmpty(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new BadRequestException("Angielska nazwa słowa jest wymagana!");
+            }
+        }
         public void ThrowIfWordIsNull(Word? word)
         {
             if (word == null)

@@ -16,6 +16,7 @@ namespace EasyTalkForKids_UnitTests.Services
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
         private readonly Mock<IMapper> _mockMapper;
         private readonly Mock<IRepository<Category>> _mockCategoryRepository;
+        private readonly Mock<ITextFormatter> _mockTextFormatter;
 
         public LessonServiceTests()
         {
@@ -25,11 +26,12 @@ namespace EasyTalkForKids_UnitTests.Services
             _mockCategoryValidator = new Mock<ICategoryValidator>();
             _mockNameValidator = new Mock<INameValidator>();
             _mockMapper = new Mock<IMapper>();
+            _mockTextFormatter = new Mock<ITextFormatter>();
         }
         [Fact]
         public void Add_WhenCorrectData_ShouldPassLessonToRepository()
         {
-            var lessonService = new LessonService(_mocklessonRepository.Object, _mockCategoryRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
+            var lessonService = new LessonService(_mocklessonRepository.Object, _mockCategoryRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
 
             var dto = new AddLessonDto()
             {
@@ -55,45 +57,6 @@ namespace EasyTalkForKids_UnitTests.Services
             lessonService.Add(dto);
 
             _mocklessonRepository.Verify(x => x.Add(lesson), Times.Once);
-        }
-        [Fact]
-        public void Add_WhenPolishNameContainsUppercaseLetters_ShouldConvertToLowercase()
-        {
-            var lessonService = new LessonService(_mocklessonRepository.Object, _mockCategoryRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
-
-            var dto = new AddLessonDto
-            {
-                PolishName = "LeKCJa 1",
-                EnglishName = "lesson 1"
-            };
-
-            var category = new Category();
-
-            _mockCategoryRepository.Setup(x => x.Get(dto.CategoryId)).Returns(category);
-
-            lessonService.Add(dto);
-
-            Assert.Equal("lekcja 1", dto.PolishName);
-        }
-
-        [Fact]
-        public void Add_WhenEnglishNameContainsUppercaseLetters_ShouldConvertToLowercase()
-        {
-            var lessonService = new LessonService(_mocklessonRepository.Object, _mockCategoryRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
-
-            var dto = new AddLessonDto
-            {
-                PolishName = "lekcja 1",
-                EnglishName = "LEsSon 1"
-            };
-
-            var category = new Category();
-
-            _mockCategoryRepository.Setup(x => x.Get(dto.CategoryId)).Returns(category);
-
-            lessonService.Add(dto);
-
-            Assert.Equal("lesson 1", dto.EnglishName);
         }
     }
 }
