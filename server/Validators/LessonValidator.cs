@@ -6,17 +6,17 @@ namespace EasyTalkForKids.Validators
 {
     public class LessonValidator : ILessonValidator
     {
-        public void ThrowIfPolishNameIsNull(string name)
+        public void ThrowIfPolishNameIsNullOrEmpty(string name)
         {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new BadRequestException("Polska nazwa lekcji jest wymagana!");
             }
         }
 
-        public void ThrowIfEnglishNameIsNull(string name)
+        public void ThrowIfEnglishNameIsNullOrEmpty(string name)
         {
-            if (name == null)
+            if (string.IsNullOrWhiteSpace(name))
             {
                 throw new BadRequestException("Angielska nazwa lekcji jest wymagana!");
             }

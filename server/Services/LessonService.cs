@@ -13,8 +13,9 @@ namespace EasyTalkForKids.Services
         private readonly ICategoryValidator _categoryValidator;
         private readonly INameValidator _nameValidator;
         private readonly IMapper _mapper;
+        private readonly ITextFormatter _textFormatter;
 
-        public LessonService(IRepository<Lesson> lessonRepository, IRepository<Category> categoryRepository, ILessonValidator lessonValidator, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper)
+        public LessonService(IRepository<Lesson> lessonRepository, IRepository<Category> categoryRepository, ILessonValidator lessonValidator, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
         {
             _lessonRepository = lessonRepository;
             _categoryRepository = categoryRepository;
@@ -22,12 +23,16 @@ namespace EasyTalkForKids.Services
             _categoryValidator = categoryValidator;
             _nameValidator = nameValidator;
             _mapper = mapper;
+            _textFormatter = textFormatter;
         }
 
         public void Add(AddLessonDto dto)
         {
-            _lessonValidator.ThrowIfPolishNameIsNull(dto.PolishName);
-            _lessonValidator.ThrowIfEnglishNameIsNull(dto.EnglishName);
+            dto.PolishName = _textFormatter.NormalizeText(dto.PolishName);
+            dto.EnglishName = _textFormatter.NormalizeText(dto.EnglishName);
+
+            _lessonValidator.ThrowIfPolishNameIsNullOrEmpty(dto.PolishName);
+            _lessonValidator.ThrowIfEnglishNameIsNullOrEmpty(dto.EnglishName);
 
             _nameValidator.ValidateNameAllowingSpaces(dto.PolishName);
             _nameValidator.ValidateNameAllowingSpaces(dto.EnglishName);
@@ -36,8 +41,6 @@ namespace EasyTalkForKids.Services
 
             _categoryValidator.ThrowIfCategoryIsNull(category);
 
-            dto.PolishName = dto.PolishName.ToLower();
-            dto.EnglishName = dto.EnglishName.ToLower();
 
             var lesson = _mapper.Map<Lesson>(dto);
 

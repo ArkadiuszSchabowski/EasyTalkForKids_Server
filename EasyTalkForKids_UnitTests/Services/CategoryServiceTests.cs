@@ -14,17 +14,19 @@ namespace EasyTalkForKids_UnitTests.Services
         private readonly Mock<INameValidator> _mockNameValidator;
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
         private readonly Mock<IMapper> _mockMapper;
+        private readonly Mock<ITextFormatter> _mockTextFormatter;
         public CategoryServiceTests()
         {
             _mockCategoryRepository = new Mock<IRepository<Category>>();
             _mockNameValidator = new Mock<INameValidator>();
             _mockCategoryValidator = new Mock<ICategoryValidator>();
             _mockMapper = new Mock<IMapper>();
+            _mockTextFormatter = new Mock<ITextFormatter>();
         }
         [Fact]
         public void Add_WhenCorrectData_ShouldPassCategoryToRepository()
         {
-            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
+            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
 
             var dto = new AddCategoryDto()
             {
@@ -43,38 +45,6 @@ namespace EasyTalkForKids_UnitTests.Services
             categoryService.Add(dto);
 
             _mockCategoryRepository.Verify(x => x.Add(category), Times.Once);
-        }
-
-        [Fact]
-        public void Add_WhenPolishNameContainsUppercaseLetters_ShouldConvertToLowercase()
-        {
-            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
-
-            var dto = new AddCategoryDto
-            {
-                PolishName = "KOT",
-                EnglishName = "cat"
-            };
-
-            categoryService.Add(dto);
-
-            Assert.Equal("kot", dto.PolishName);
-        }
-
-        [Fact]
-        public void Add_WhenEnglishNameContainsUppercaseLetters_ShouldConvertToLowercase()
-        {
-            var categoryService = new CategoryService(_mockCategoryRepository.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object);
-
-            var dto = new AddCategoryDto
-            {
-                PolishName = "kot",
-                EnglishName = "CAT"
-            };
-
-            categoryService.Add(dto);
-
-            Assert.Equal("cat", dto.EnglishName);
         }
     }
 }
