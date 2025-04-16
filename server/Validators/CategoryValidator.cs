@@ -6,12 +6,6 @@ namespace EasyTalkForKids.Validators
 {
     public class CategoryValidator : ICategoryValidator
     {
-        private readonly IRepositoryCategory _repositoryCategory;
-
-        public CategoryValidator(IRepositoryCategory repositoryCategory)
-        {
-            _repositoryCategory = repositoryCategory;
-        }
         public void ThrowIfPolishNameIsNullOrEmpty(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -27,20 +21,16 @@ namespace EasyTalkForKids.Validators
                 throw new BadRequestException("Angielska nazwa kategorii jest wymagana!");
             }
         }
-        public void ThrowIfPolishNameExists(string name)
+        public void ThrowIfPolishNameExists(Category? category)
         {
-            var category = _repositoryCategory.GetByPolishName(name);
-
             if (category != null)
             {
                 throw new ConflictException("Polska nazwa kategorii istnieje już w bazie danych!");
             }
         }
 
-        public void ThrowIfEnglishNameExists(string name)
+        public void ThrowIfEnglishNameExists(Category? category)
         {
-            var category = _repositoryCategory.GetByEnglishName(name);
-
             if (category != null)
             {
                 throw new ConflictException("Angielska nazwa kategorii istnieje już w bazie danych!");

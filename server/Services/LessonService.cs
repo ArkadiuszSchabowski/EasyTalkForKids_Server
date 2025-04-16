@@ -41,7 +41,6 @@ namespace EasyTalkForKids.Services
 
             _categoryValidator.ThrowIfCategoryIsNull(category);
 
-
             var lesson = _mapper.Map<Lesson>(dto);
 
             _lessonRepository.Add(lesson);
