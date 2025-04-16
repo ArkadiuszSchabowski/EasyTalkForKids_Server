@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EasyTalkForKids.Repositories
 {
-    public class CategoryRepository : IRepository<Category>, IRepositoryCategory
+    public class CategoryRepository : IRepository<Category>, INameRepository<Category>
     {
         private readonly MyDbContext _context;
 

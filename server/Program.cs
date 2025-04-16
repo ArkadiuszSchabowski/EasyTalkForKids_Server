@@ -42,7 +42,7 @@ builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
 builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 
-builder.Services.AddScoped<IRepositoryCategory, CategoryRepository>();
+builder.Services.AddScoped<INameRepository<Category>, CategoryRepository>();
 
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<ILessonValidator, LessonValidator>();

@@ -8,14 +8,16 @@ namespace EasyTalkForKids.Services
     public class CategoryService : IAddService<AddCategoryDto>, IGetService<GetCategoryDto>, IRemoveService<RemoveCategoryDto>
     {
         private readonly IRepository<Category> _categoryRepository;
+        private readonly INameRepository<Category> _nameRepository;
         private readonly ICategoryValidator _categoryValidator;
         private readonly INameValidator _nameValidator;
         private readonly IMapper _mapper;
         private readonly ITextFormatter _textFormatter;
 
-        public CategoryService(IRepository<Category> categoryRepository, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
+        public CategoryService(IRepository<Category> categoryRepository, INameRepository<Category> nameRepository, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
         {
             _categoryRepository = categoryRepository;
+            _nameRepository = nameRepository;
             _categoryValidator = categoryValidator;
             _nameValidator = nameValidator;
             _mapper = mapper;
@@ -33,9 +35,11 @@ namespace EasyTalkForKids.Services
             _nameValidator.ValidateName(dto.PolishName);
             _nameValidator.ValidateName(dto.EnglishName);
 
+            var polishCategory = _nameRepository.GetByPolishName(dto.PolishName);
+            var englishCategory = _nameRepository.GetByEnglishName(dto.EnglishName);
 
-            _categoryValidator.ThrowIfPolishNameExists(dto.PolishName);
-            _categoryValidator.ThrowIfEnglishNameExists(dto.EnglishName);
+            _categoryValidator.ThrowIfPolishNameExists(polishCategory);
+            _categoryValidator.ThrowIfEnglishNameExists(englishCategory);
 
             var category = _mapper.Map<Category>(dto);
 

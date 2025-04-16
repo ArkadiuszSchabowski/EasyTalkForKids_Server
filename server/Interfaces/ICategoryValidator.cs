@@ -6,8 +6,8 @@ namespace EasyTalkForKids.Interfaces
     {
         void ThrowIfPolishNameIsNullOrEmpty(string name);
         void ThrowIfEnglishNameIsNullOrEmpty(string name);
-        void ThrowIfPolishNameExists(string name);
-        void ThrowIfEnglishNameExists(string name);
+        void ThrowIfPolishNameExists(Category? category);
+        void ThrowIfEnglishNameExists(Category? category);
         void ThrowIfCategoryIsNull(Category? category);
     }
 }

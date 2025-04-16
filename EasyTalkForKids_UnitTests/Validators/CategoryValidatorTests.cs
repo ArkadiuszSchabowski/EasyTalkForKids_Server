@@ -12,12 +12,6 @@ namespace EasyTalkForKids_UnitTests.Validators
     [Trait("Category", "Unit")]
     public class CategoryValidatorTests
     {
-        private readonly Mock<IRepositoryCategory> _mockRepositoryCategory;
-        public CategoryValidatorTests()
-        {
-            _mockRepositoryCategory = new Mock<IRepositoryCategory>();
-        }
-
         [Theory]
         [InlineData("zwierzęta")]
         [InlineData("POJAZDY")]
@@ -25,7 +19,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("Przedmioty domowe")]
         public void ThrowIfPolishNameIsNullOrEmpty_WhenIsCorrect_ShouldNotThrowException(string name)
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
             var exception = Record.Exception(() => categoryValidator.ThrowIfPolishNameIsNullOrEmpty(name));
 
@@ -37,7 +31,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData(null)]
         public void ThrowIfPolishNameIsNullOrEmpty_WhenIsNullOrEmpty_ShouldThrowBadRequestException(string? name)
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
             Action action = () => categoryValidator.ThrowIfPolishNameIsNullOrEmpty(name);
 
@@ -53,7 +47,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData("Wild animals")]
         public void ThrowIfEnglishNameIsNullOrEmpty_WhenIsCorrect_ShouldNotThrowException(string name)
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
             var exception = Record.Exception(() => categoryValidator.ThrowIfEnglishNameIsNullOrEmpty(name));
 
@@ -65,7 +59,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [InlineData(null)]
         public void ThrowIfEnglishNameIsNullOrEmpty_WhenIsNullOrEmpty_ShouldThrowBadRequestException(string? name)
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
             Action action = () => categoryValidator.ThrowIfEnglishNameIsNullOrEmpty(name);
 
@@ -77,13 +71,11 @@ namespace EasyTalkForKids_UnitTests.Validators
         [Fact]
         public void ThrowIfPolishNameExists_WhenNameDoesNotExist_ShouldNotThrowException()
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
-            string name = "zwierzęta";
+            Category? category = null;
 
-            _mockRepositoryCategory.Setup(x => x.GetByPolishName(name)).Returns((Category)null);
-
-            var exception = Record.Exception(() => categoryValidator.ThrowIfPolishNameExists(name));
+            var exception = Record.Exception(() => categoryValidator.ThrowIfPolishNameExists(category));
 
             Assert.Null(exception);
         }
@@ -91,13 +83,11 @@ namespace EasyTalkForKids_UnitTests.Validators
         [Fact]
         public void ThrowIfEnglishNameExists_WhenNameDoesNotExist_ShouldNotThrowException()
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
+            var categoryValidator = new CategoryValidator();
 
-            string name = "animals";
+            Category? category = null;
 
-            _mockRepositoryCategory.Setup(x => x.GetByEnglishName(name)).Returns((Category)null);
-
-            var exception = Record.Exception(() => categoryValidator.ThrowIfEnglishNameExists(name));
+            var exception = Record.Exception(() => categoryValidator.ThrowIfEnglishNameExists(category));
 
             Assert.Null(exception);
         }
@@ -105,9 +95,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [Fact]
         public void ThrowIfPolishNameExists_WhenPolishNameExistsInDb_ShouldThrowConflictException()
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
-
-            string name = "samochody";
+            var categoryValidator = new CategoryValidator();
 
             var category = new Category
             {
@@ -116,9 +104,7 @@ namespace EasyTalkForKids_UnitTests.Validators
                 EnglishName = "cars"
             };
 
-            _mockRepositoryCategory.Setup(x => x.GetByPolishName(name)).Returns(category);
-
-            Action action = () => categoryValidator.ThrowIfPolishNameExists(name);
+            Action action = () => categoryValidator.ThrowIfPolishNameExists(category);
 
             var exception = Assert.Throws<ConflictException>(action);
 
@@ -128,9 +114,7 @@ namespace EasyTalkForKids_UnitTests.Validators
         [Fact]
         public void ThrowIfEnglishNameExists_WhenEnglishNameExistsInDb_ShouldThrowConflictException()
         {
-            var categoryValidator = new CategoryValidator(_mockRepositoryCategory.Object);
-
-            string name = "ubrania";
+            var categoryValidator = new CategoryValidator();
 
             var category = new Category
             {
@@ -139,9 +123,7 @@ namespace EasyTalkForKids_UnitTests.Validators
                 EnglishName = "clothes"
             };
 
-            _mockRepositoryCategory.Setup(x => x.GetByEnglishName(name)).Returns(category);
-
-            Action action = () => categoryValidator.ThrowIfEnglishNameExists(name);
+            Action action = () => categoryValidator.ThrowIfEnglishNameExists(category);
 
             var exception = Assert.Throws<ConflictException>(action);
 

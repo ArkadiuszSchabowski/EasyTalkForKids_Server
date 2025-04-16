@@ -1,10 +1,8 @@
-﻿using EasyTalkForKids_Database.Entities;
-
-namespace EasyTalkForKids.Interfaces
+﻿namespace EasyTalkForKids.Interfaces
 {
-    public interface IRepositoryCategory
+    public interface INameRepository<T> where T : class
     {
-        Category? GetByPolishName(string name);
-        Category? GetByEnglishName(string name);
+        T? GetByPolishName(string name);
+        T? GetByEnglishName(string name);
     }
 }
