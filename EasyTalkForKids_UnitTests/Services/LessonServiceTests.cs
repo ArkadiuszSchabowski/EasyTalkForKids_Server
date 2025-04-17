@@ -10,17 +10,19 @@ namespace EasyTalkForKids_UnitTests.Services
     [Trait("Category", "Unit")]
     public class LessonServiceTests
     {
-        private readonly Mock<IRepository<Lesson>> _mocklessonRepository;
-        private readonly Mock<INameValidator> _mockNameValidator;
+        private readonly Mock<IRepository<Lesson>> _mockLessonRepository;
+        private readonly Mock<IRepository<Category>> _mockCategoryRepository;
+        private readonly Mock<INameRepository<Lesson>> _mockNameRepository;
         private readonly Mock<ILessonValidator> _mockLessonValidator;
         private readonly Mock<ICategoryValidator> _mockCategoryValidator;
+        private readonly Mock<INameValidator> _mockNameValidator;
         private readonly Mock<IMapper> _mockMapper;
-        private readonly Mock<IRepository<Category>> _mockCategoryRepository;
         private readonly Mock<ITextFormatter> _mockTextFormatter;
 
         public LessonServiceTests()
         {
-            _mocklessonRepository = new Mock<IRepository<Lesson>>();
+            _mockLessonRepository = new Mock<IRepository<Lesson>>();
+            _mockNameRepository = new Mock<INameRepository<Lesson>>();
             _mockCategoryRepository = new Mock<IRepository<Category>>();
             _mockLessonValidator = new Mock<ILessonValidator>();
             _mockCategoryValidator = new Mock<ICategoryValidator>();
@@ -31,7 +33,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenCorrectData_ShouldPassLessonToRepository()
         {
-            var lessonService = new LessonService(_mocklessonRepository.Object, _mockCategoryRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
+            var lessonService = new LessonService(_mockLessonRepository.Object, _mockCategoryRepository.Object, _mockNameRepository.Object, _mockLessonValidator.Object, _mockCategoryValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
 
             var dto = new AddLessonDto()
             {
@@ -56,7 +58,7 @@ namespace EasyTalkForKids_UnitTests.Services
 
             lessonService.Add(dto);
 
-            _mocklessonRepository.Verify(x => x.Add(lesson), Times.Once);
+            _mockLessonRepository.Verify(x => x.Add(lesson), Times.Once);
         }
     }
 }

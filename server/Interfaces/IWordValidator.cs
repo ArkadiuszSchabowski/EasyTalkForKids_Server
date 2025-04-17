@@ -7,5 +7,7 @@ namespace EasyTalkForKids.Interfaces
         public void ThrowIfPolishNameIsNullOrEmpty(string name);
         public void ThrowIfEnglishNameIsNullOrEmpty(string name);
         public void ThrowIfWordIsNull(Word? word);
+        void ThrowIfPolishNameExists(Word? word);
+        void ThrowIfEnglishNameExists(Word? word);
     }
 }

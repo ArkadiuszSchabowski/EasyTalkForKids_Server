@@ -43,6 +43,8 @@ builder.Services.AddScoped<IRepository<Lesson>, LessonRepository>();
 builder.Services.AddScoped<IRepository<Word>, WordRepository>();
 
 builder.Services.AddScoped<INameRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<INameRepository<Lesson>, LessonRepository>();
+builder.Services.AddScoped<INameRepository<Word>, WordRepository>();
 
 builder.Services.AddScoped<ICategoryValidator, CategoryValidator>();
 builder.Services.AddScoped<ILessonValidator, LessonValidator>();

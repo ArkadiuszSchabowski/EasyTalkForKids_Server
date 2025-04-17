@@ -11,6 +11,7 @@ namespace EasyTalkForKids_UnitTests.Services
     public class WordServiceTests
     {
         private readonly Mock<IRepository<Word>> _mockWordRepository;
+        private readonly Mock<INameRepository<Word>> _mockNameRepository;
         private readonly Mock<IRepository<Lesson>> _mockLessonRepository;
         private readonly Mock<IWordValidator> _mockWordValidator;
         private readonly Mock<ILessonValidator> _mockLessonValidator;
@@ -20,6 +21,7 @@ namespace EasyTalkForKids_UnitTests.Services
         public WordServiceTests()
         {
             _mockWordRepository = new Mock<IRepository<Word>>();
+            _mockNameRepository = new Mock<INameRepository<Word>>();
             _mockLessonRepository = new Mock<IRepository<Lesson>>();
             _mockWordValidator = new Mock<IWordValidator>();
             _mockLessonValidator = new Mock<ILessonValidator>();
@@ -30,7 +32,7 @@ namespace EasyTalkForKids_UnitTests.Services
         [Fact]
         public void Add_WhenCorrectData_ShouldPassWordToRepository()
         {
-            var wordService = new WordService(_mockWordRepository.Object, _mockLessonRepository.Object, _mockWordValidator.Object, _mockLessonValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
+            var wordService = new WordService(_mockWordRepository.Object, _mockNameRepository.Object, _mockLessonRepository.Object, _mockWordValidator.Object, _mockLessonValidator.Object, _mockNameValidator.Object, _mockMapper.Object, _mockTextFormatter.Object);
 
             var dto = new AddWordDto()
             {

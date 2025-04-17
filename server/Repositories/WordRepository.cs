@@ -4,7 +4,7 @@ using EasyTalkForKids_Database.Entities;
 
 namespace EasyTalkForKids.Repositories
 {
-    public class WordRepository : IRepository<Word>
+    public class WordRepository : IRepository<Word>, INameRepository<Word>
     {
         private readonly MyDbContext _context;
 
@@ -24,8 +24,19 @@ namespace EasyTalkForKids.Repositories
 
         public Word? Get(int id)
         {
-            return _context.Words.SingleOrDefault(x => x.Id == id);
+            return _context.Words.SingleOrDefault(w => w.Id == id);
         }
+
+        public Word? GetByEnglishName(string name)
+        {
+            return _context.Words.SingleOrDefault(w => w.EnglishName == name);
+        }
+
+        public Word? GetByPolishName(string name)
+        {
+            return _context.Words.SingleOrDefault(w => w.PolishName == name);
+        }
+
         public void Remove(Word item)
         {
             _context.Words.Remove(item);
