@@ -9,16 +9,18 @@ namespace EasyTalkForKids.Services
     {
         private readonly IRepository<Lesson> _lessonRepository;
         private readonly IRepository<Category> _categoryRepository;
+        private readonly INameRepository<Lesson> _nameRepository;
         private readonly ILessonValidator _lessonValidator;
         private readonly ICategoryValidator _categoryValidator;
         private readonly INameValidator _nameValidator;
         private readonly IMapper _mapper;
         private readonly ITextFormatter _textFormatter;
 
-        public LessonService(IRepository<Lesson> lessonRepository, IRepository<Category> categoryRepository, ILessonValidator lessonValidator, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
+        public LessonService(IRepository<Lesson> lessonRepository, IRepository<Category> categoryRepository, INameRepository<Lesson> nameRepository, ILessonValidator lessonValidator, ICategoryValidator categoryValidator, INameValidator nameValidator, IMapper mapper, ITextFormatter textFormatter)
         {
             _lessonRepository = lessonRepository;
             _categoryRepository = categoryRepository;
+            _nameRepository = nameRepository;
             _lessonValidator = lessonValidator;
             _categoryValidator = categoryValidator;
             _nameValidator = nameValidator;
@@ -38,8 +40,12 @@ namespace EasyTalkForKids.Services
             _nameValidator.ValidateNameAllowingSpaces(dto.EnglishName);
 
             var category = _categoryRepository.Get(dto.CategoryId);
+            var polishLesson = _nameRepository.GetByPolishName(dto.PolishName);
+            var englishLesson = _nameRepository.GetByEnglishName(dto.EnglishName);
 
             _categoryValidator.ThrowIfCategoryIsNull(category);
+            _lessonValidator.ThrowIfPolishNameExists(polishLesson);
+            _lessonValidator.ThrowIfEnglishNameExists(englishLesson);
 
             var lesson = _mapper.Map<Lesson>(dto);
 

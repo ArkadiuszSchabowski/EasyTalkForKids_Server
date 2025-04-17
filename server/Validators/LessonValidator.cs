@@ -21,6 +21,21 @@ namespace EasyTalkForKids.Validators
                 throw new BadRequestException("Angielska nazwa lekcji jest wymagana!");
             }
         }
+        public void ThrowIfPolishNameExists(Lesson? lesson)
+        {
+            if (lesson != null)
+            {
+                throw new ConflictException("Polska nazwa lekcji istnieje już w bazie danych!");
+            }
+        }
+
+        public void ThrowIfEnglishNameExists(Lesson? lesson)
+        {
+            if (lesson != null)
+            {
+                throw new ConflictException("Angielska nazwa lekcji istnieje już w bazie danych!");
+            }
+        }
         public void ThrowIfLessonIsNull(Lesson? lesson)
         {
             if (lesson == null)

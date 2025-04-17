@@ -27,5 +27,15 @@ namespace EasyTalkForKids.Validators
                 throw new NotFoundException("Nie znaleziono słowa o takim numerze Id!");
             }
         }
+
+        public void ThrowIfPolishNameExists(Word? word)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ThrowIfEnglishNameExists(Word? word)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
